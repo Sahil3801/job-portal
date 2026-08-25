@@ -12,3 +12,13 @@ Thumbs.db
 # IDE files
 .vscode/
 *.iml
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Node
+node_modules/
+
+# Build
+target/

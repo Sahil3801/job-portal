@@ -28,8 +28,10 @@ public class Utilities {
 		update.inc("seq", 1);
 		FindAndModifyOptions options = new FindAndModifyOptions();
 		options.returnNew(true);
-		options.upsert(true);   // ⭐ ADD THIS LINE
-		Sequence seqId = mongoOperation.findAndModify(query, update, options, Sequence.class);
+		options.upsert(true); // ⭐ ADD THIS LINE
+		// Sequence seqId = mongoOperation.findAndModify(query, update, options,
+		// Sequence.class);
+		Sequence seqId = mongoOperation.findAndModify(query, update, options, Sequence.class, "sequence");
 		if (seqId == null) {
 			throw new JobPortalException("Unable to get sequence id for key : " + key);
 		}
@@ -43,6 +45,8 @@ public class Utilities {
 		for (int i = 0; i < 6; i++) {
 			otp.append(secureRandom.nextInt(10));
 		}
-		return otp.toString();
+		return otp.toString(
+			
+		);
 	}
 }
