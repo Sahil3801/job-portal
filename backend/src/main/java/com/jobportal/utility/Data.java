@@ -24,7 +24,7 @@ public class Data {
 				+ "            text-align: center;\n" + "        }\n" + "    </style>\n" + "</head>\n" + "<body>\n"
 				+ "    <div class=\"container\">\n" + "        <div class=\"header\">\n"
 				+ "            <h1>Your OTP Code</h1>\n" + "        </div>\n" + "        <div class=\"body\">\n"
-				+ "            <p>Hello <strong>"+name+"</strong>,</p>\n"
+				+ "            <p>Hello <strong>" + name + "</strong>,</p>\n"
 				+ "            <p>We have received a request to verify your email address. Your OTP code is:</p>\n"
 				+ "            <div class=\"otp\">" + otp + "</div>\n"
 				+ "            <p>This OTP code is valid for 5 minutes. If you did not request this, please ignore this email.</p>\n"

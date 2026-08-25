@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.jobportal.jwt.JwtAuthenticationEntryPoint;
 import com.jobportal.jwt.JwtAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -23,12 +22,15 @@ public class SecurityConfig {
         this.filter = filter;
     }
 
+    // fixed the 31 line code instead of auth -> users
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/users/register", "/users/verifyOtp/**", "/users/sendOtp/**",
+                        .requestMatchers("/auth/login",
+                                "/auth/register", "/users/login", "/users/register", "/users/verifyOtp/**",
+                                "/users/sendOtp/**",
                                 "/users/changePass")
                         .permitAll()
                         .anyRequest().authenticated())

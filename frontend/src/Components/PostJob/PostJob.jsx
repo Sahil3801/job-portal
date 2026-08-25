@@ -1,3 +1,4 @@
+
 import { Button, NumberInput, TagsInput, Textarea } from "@mantine/core";
 import { content, fields } from "../../Data/PostJob";
 import SelectInput from "./SelectInput";
@@ -89,7 +90,7 @@ const PostJob = () => {
 
     return (
         <div data-aos="zoom-out" className="px-16 bs-mx:px-10 md-mx:px-5 py-5 ">
-            <div className="text-2xl font-semibold mb-5">Post a Job</div>
+            <div className="text-2xl  font-semibold mb-5">Post a Job</div>
             <div className="flex flex-col gap-5">
                 <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
                     <SelectInput form={form} name="jobTitle" {...select[0]} />
@@ -142,7 +143,7 @@ const PostJob = () => {
                     </Button>
                     <Button data-aos="zoom-out" color="brightSun.4" onClick={handleDraft} variant="outline">
                         Save as Draft
-                    </Button>
+                    </Button    >
                 </div>
             </div>
         </div>
