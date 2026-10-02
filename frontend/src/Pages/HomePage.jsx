@@ -10,7 +10,7 @@ import Working from "../Components/LandingPage/Working";
 
 const HomePage=()=>{
     return (
-        <div className="min-h-[90vh] bg-white-50 font-['poppins']">
+        <div className="min-h-[90vh] bg-white font-['poppins'] pb-16">
             <DreamJob/>
             <Companies/>
             <JobCategory/>

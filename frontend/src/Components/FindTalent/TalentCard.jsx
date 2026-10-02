@@ -71,7 +71,7 @@ const TalentCard = (props) => {
             <div>
                 <Text className="!text-xs text-justify !text-mine-shaft-300" lineClamp={3}>{profile?.about}</Text>
             </div>
-            <Divider color="mineShaft.7" size="xs" />
+            <Divider color="gray.3" size="xs" />
             {props.invited ? (
                 <div className="flex gap-1 text-mine-shaft-200 text-sm items-center">
                     <IconCalendarMonth stroke={1.5} /> Interview: {formatInterviewTime(props.interviewTime)}
@@ -84,7 +84,7 @@ const TalentCard = (props) => {
                     </div>
                 </div>
             )}
-            <Divider color="mineShaft.7" size="xs" />
+            <Divider color="gray.3" size="xs" />
             <div className="flex [&>*]:w-1/2 [&>*]:p-1">
                 {!props.invited && (
                     <>

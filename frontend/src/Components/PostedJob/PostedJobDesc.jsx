@@ -3,6 +3,12 @@ import Job from "../JobDesc/Job";
 import TalentCard from "../FindTalent/TalentCard";
 import { useEffect, useMemo, useState } from "react";
 
+const EmptyState = ({ text }) => (
+  <div className="w-full text-center py-10 text-mine-shaft-300 bg-mine-shaft-900 rounded-xl">
+    {text}
+  </div>
+);
+
 const PostedJobDesc = (props) => {
   const [tab, setTab] = useState("overview");
 
@@ -33,7 +39,18 @@ const PostedJobDesc = (props) => {
         <>
           <div className="text-2xl xs-mx:text-xl font-semibold flex items-center ">
             {props?.jobTitle}{" "}
-            <Badge variant="light" ml="sm" color="gray" size="sm">
+            <Badge
+              variant="filled"
+              ml="sm"
+              size="sm"
+              color={
+                props.jobStatus === "ACTIVE"
+                  ? "#15803d"
+                  : props.jobStatus === "CLOSED"
+                  ? "#b91c1c"
+                  : "gray.7"
+              }
+            >
               {props?.jobStatus}
             </Badge>
           </div>
@@ -48,8 +65,7 @@ const PostedJobDesc = (props) => {
               autoContrast
               variant="outline"
             >
-              {/* Note: The styling here is hardcoded for a dark theme */}
-              <Tabs.List className="font-semibold [&_button[data-active='true']]:!border-b-white-50 [&_button]:!text-xl ...">
+              <Tabs.List className="font-semibold [&_button]:!text-lg xs-mx:[&_button]:!text-base">
                 <Tabs.Tab value="overview">Overview</Tabs.Tab>
                 <Tabs.Tab value="applicants">Applicants</Tabs.Tab>
                 <Tabs.Tab value="invited">Invited</Tabs.Tab>
@@ -66,9 +82,9 @@ const PostedJobDesc = (props) => {
                 <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.APPLIED.length > 0
                     ? applicantLists.APPLIED.map((talent) => (
-                        <TalentCard key={talent.id} {...talent} posted={true} />
+                        <TalentCard key={talent.applicantId} {...talent} posted={true} />
                       ))
-                    : "No Applicants Yet"}
+                    : <EmptyState text="No Applicants Yet" />}
                 </div>
               </Tabs.Panel>
               
@@ -76,9 +92,9 @@ const PostedJobDesc = (props) => {
                  <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.INTERVIEWING.length > 0
                     ? applicantLists.INTERVIEWING.map((talent) => (
-                        <TalentCard key={talent.id} {...talent} invited />
+                        <TalentCard key={talent.applicantId} {...talent} invited />
                       ))
-                    : "No Applicants Invited Yet"}
+                    : <EmptyState text="No Applicants Invited Yet" />}
                 </div>
               </Tabs.Panel>
 
@@ -86,9 +102,9 @@ const PostedJobDesc = (props) => {
                 <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.OFFERED.length > 0
                     ? applicantLists.OFFERED.map((talent) => (
-                        <TalentCard key={talent.id} {...talent} offered />
+                        <TalentCard key={talent.applicantId} {...talent} offered />
                       ))
-                    : "No Applicants Offered Yet"}
+                    : <EmptyState text="No Applicants Offered Yet" />}
                 </div>
               </Tabs.Panel>
 
@@ -97,9 +113,9 @@ const PostedJobDesc = (props) => {
                   {applicantLists.REJECTED.length > 0
                     ? applicantLists.REJECTED.map((talent) => (
                         // --- FIX 3: Bug Fix ---
-                        <TalentCard key={talent.id} {...talent} rejected />
+                        <TalentCard key={talent.applicantId} {...talent} rejected />
                       ))
-                    : "No Applicants Rejected Yet"}
+                    : <EmptyState text="No Applicants Rejected Yet" />}
                 </div>
               </Tabs.Panel>
             </Tabs>
@@ -191,7 +207,7 @@ export default PostedJobDesc;
 //                     ? arr.map((talent, index) => (
 //                         <TalentCard key={index} {...talent} posted={true} />
 //                       ))
-//                     : "No Applicants Yet"}
+//                     : <EmptyState text="No Applicants Yet" />}
 //                 </div>
 //               </Tabs.Panel>
 //               <Tabs.Panel value="invited">
@@ -200,7 +216,7 @@ export default PostedJobDesc;
 //                     ? arr.map((talent, index) => (
 //                         <TalentCard key={index} {...talent} invited />
 //                       ))
-//                     : "No Applicants Invited Yet"}
+//                     : <EmptyState text="No Applicants Invited Yet" />}
 //                 </div>
 //               </Tabs.Panel>
 //               <Tabs.Panel value="offered">
@@ -209,7 +225,7 @@ export default PostedJobDesc;
 //                     ? arr.map((talent, index) => (
 //                         <TalentCard key={index} {...talent} offered />
 //                       ))
-//                     : "No Applicants Offered Yet"}
+//                     : <EmptyState text="No Applicants Offered Yet" />}
 //                 </div>
 //               </Tabs.Panel>
 //               <Tabs.Panel value="rejected">
@@ -218,7 +234,7 @@ export default PostedJobDesc;
 //                     ? arr?.map((talent, index) => (
 //                         <TalentCard key={index} {...talent} offered />
 //                       ))
-//                     : "No Applicants Rejected Yet"}
+//                     : <EmptyState text="No Applicants Rejected Yet" />}
 //                 </div>
 //               </Tabs.Panel>
 //             </Tabs>

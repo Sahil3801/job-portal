@@ -101,8 +101,8 @@ const SignUp = () => {
         overlayProps={{ radius: "sm", blur: 2 }}
         loaderProps={{ color: "white.4", type: "bars" }}
       />
-      <div className="w-1/2 sm-mx:py-20 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center bg-white p-8 rounded-lg">
-        <div className="text-2xl font-semibold text-black-950">
+      <div className="w-1/2 sm-mx:py-20 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center">
+        <div className="text-2xl font-semibold text-mine-shaft-50">
           Create Account
         </div>
         <TextInput
@@ -113,7 +113,7 @@ const SignUp = () => {
           label="Full Name"
           withAsterisk
           placeholder="Your name"
-          className="bg-white-100 border-white-300 text-black-950"
+
         />
         <TextInput
           error={formError.email}
@@ -124,7 +124,7 @@ const SignUp = () => {
           label="Email"
           withAsterisk
           placeholder="Your email"
-          className="bg-white-100 border-white-300 text-black-950"
+
         />
         <PasswordInput
           value={data.password}
@@ -135,7 +135,7 @@ const SignUp = () => {
           label="Password"
           withAsterisk
           placeholder="Password"
-          className="bg-white-100 border-white-300 text-black-950"
+
         />
 
         <PasswordInput
@@ -147,25 +147,25 @@ const SignUp = () => {
           label="Confirm Password"
           withAsterisk
           placeholder="Confirm password"
-          className="bg-white-100 border-white-300 text-black-950"
+
         />
         <Radio.Group
           value={data.accountType}
           onChange={handleChange}
           label="You are?"
-          className="bg-white-100 border-white-300 text-black-950"
+
           withAsterisk
         >
           <div className="flex gap-6 xs-mx:gap-3">
             <Radio
               name="accountType"
-              className="py-4 px-6 sm-mx:px-4 sm-mx:py-2 hover:bg-mine-shaft-900 border-mine-shaft-800 border rounded-lg has-[:checked]:!border-bright-sun-400"
+              className="py-4 px-6 sm-mx:px-4 sm-mx:py-2 hover:bg-mine-shaft-900 border-mine-shaft-700 border rounded-lg has-[:checked]:!border-bright-sun-400 has-[:checked]:bg-bright-sun-50"
               value="APPLICANT"
               label="Applicant"
             />
             <Radio
               name="accountType"
-              className="py-4 px-6 sm-mx:px-4 sm-mx:py-2 hover:bg-mine-shaft-900 border-mine-shaft-800 border rounded-lg has-[:checked]:!border-bright-sun-400"
+              className="py-4 px-6 sm-mx:px-4 sm-mx:py-2 hover:bg-mine-shaft-900 border-mine-shaft-700 border rounded-lg has-[:checked]:!border-bright-sun-400 has-[:checked]:bg-bright-sun-50"
               value="EMPLOYER"
               label="Employer"
             />
@@ -174,17 +174,16 @@ const SignUp = () => {
         <Button
           loading={loading}
           onClick={handleSubmit}
-          autoContrast
           variant="filled"
-          color="blue"
           fullWidth
         >
           Sign up
         </Button>
-        <div className="text-center sm-mx:text-sm xs-mx:text-xs text-black-800">
+        <div className="text-center sm-mx:text-sm xs-mx:text-xs text-mine-shaft-300">
           Have an account?{" "}
-          <span
-            className="text-blue-600 hover:underline cursor-pointer"
+          <button
+            type="button"
+            className="text-bright-sun-400 font-medium hover:underline"
             onClick={() => {
               navigate("/login");
               setFormError(form);
@@ -192,7 +191,7 @@ const SignUp = () => {
             }}
           >
             Login
-          </span>{" "}
+          </button>{" "}
         </div>
       </div>
     </>

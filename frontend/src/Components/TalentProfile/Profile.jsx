@@ -32,13 +32,13 @@ const Profile = () => {
             <div>
                 <div className="relative">
                     <img
-                        className="rounded-t-2xl xl-mx:h-40 w-full xs-mx:h-32"
+                        className="rounded-t-2xl w-full h-48 xs-mx:h-32 object-cover"
                         src="/Profile/banner.jpg"
                         alt=""
                     />
-                    <div className="absolute cursor-pointer flex items-center justify-center !rounded-full -bottom-1/3 md-mx:-bottom-10 sm-mx:-bottom-16 left-6">
+                    <div className="absolute flex items-center justify-center !rounded-full -bottom-16 xs-mx:-bottom-12 left-6">
                         <Avatar
-                            className="!w-48 !h-48 md-mx:!w-40 md-mx:!h-40 border-mine-shaft-950 border-8 rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!h-32 xs-mx:!w-32"
+                            className="!w-32 !h-32 xs-mx:!w-24 xs-mx:!h-24 border-white border-4 rounded-full shadow-sm"
                             src={
                                 profile?.picture
                                     ? `data:image/jpeg;base64,${profile?.picture}`
@@ -48,8 +48,8 @@ const Profile = () => {
                         />
                     </div>
                 </div>
-                <div className="px-3 mt-16">
-                    <div className="text-3xl xs-mx:text-2xl font-semibold flex justify-between">
+                <div className="px-3 mt-20 xs-mx:mt-16">
+                    <div className="text-3xl xs-mx:text-2xl font-semibold flex justify-between items-center gap-3 text-mine-shaft-50">
                         {profile?.name}{' '}
                         <Button size={matches ? 'sm' : 'md'} color="brightSun.4" variant="light">
                             Message

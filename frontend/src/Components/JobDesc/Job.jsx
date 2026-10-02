@@ -1,3 +1,4 @@
+import { logoFallback } from "../../Services/Utilities";
 import { ActionIcon, Button, Divider } from "@mantine/core";
 import { card } from "../../Data/JobDescData";
 import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
@@ -51,7 +52,7 @@ const Job = (props) => {
             <div className="flex justify-between items-center flex-wrap">
                 <div className="flex items-center gap-2">
                     <div className="p-3 bg-mine-shaft-800 rounded-xl shrink-0 flex ">
-                        <img className="h-14 xs-mx:h-10 xs-mx:w-10" src={`/Icons/${props.company}.png`} alt="" />
+                        <img className="h-14 xs-mx:h-10 xs-mx:w-10" src={`/Icons/${props.company}.png`} onError={logoFallback} alt="" />
                     </div>
                     <div className="flex flex-col gap-1">
                         <div className="font-semibold text-2xl xs-mx:text-xl">{props.jobTitle}</div>
@@ -68,7 +69,7 @@ const Job = (props) => {
                     </Link>}
                     {applied && !props.edit && <Button color="green.8" size="sm" variant="light">Applied</Button>}
                     {props.edit && !props.closed
-                        ? <Button onClick={handleClose} color="red.4" size="sm" variant="light">Close</Button>
+                        ? <Button onClick={handleClose} color="#b91c1c" size="sm" variant="outline">Close</Button>
                         : profile.savedJobs?.includes(props.id)
                             ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-bright-sun-400" stroke={1.5} />
                             : <IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-bright-sun-400 text-mine-shaft-300" stroke={1.5} />}
@@ -103,7 +104,7 @@ const Job = (props) => {
                 <div className="flex items-center justify-between mb-3 xs-mx:flex-wrap xs-mx:gap-2">
                     <div className="flex items-center gap-2">
                         <div className="p-3 bg-mine-shaft-800 rounded-xl flex ">
-                            <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
+                            <img className="h-8" src={`/Icons/${props.company}.png`} onError={logoFallback} alt="" />
                         </div>
                         <div>
                             <div className="text-lg font-medium">{props.company}</div>

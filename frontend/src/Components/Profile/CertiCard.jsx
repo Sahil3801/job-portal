@@ -1,3 +1,4 @@
+import { logoFallback } from "../../Services/Utilities";
 import { ActionIcon } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { formatDate } from "../../Services/Utilities";
@@ -25,7 +26,7 @@ const CertiCard = (props) => {
             <div className="flex justify-between sm-mx:flex-wrap">
                 <div className="flex gap-2 items-center">
                     <div className="p-2 bg-mine-shaft-800 rounded-md shrink-0">
-                        <img className="h-7" src={`/Icons/${props.issuer}.png`} alt="" />
+                        <img className="h-7" src={`/Icons/${props.issuer}.png`} onError={logoFallback} alt="" />
                     </div>
                     <div className="flex flex-col">
                         <div className="font-semibold xs-mx:text-sm">{props.name}</div>
@@ -38,7 +39,7 @@ const CertiCard = (props) => {
                         <div className="text-sm xs-mx:text-xs text-mine-shaft-300">ID: {props.certificateId}</div>
                     </div>
                     {props.edit && (
-                        <ActionIcon onClick={handleDelete} variant="subtle" color="red.8" size={matches ? "md" : "lg"}>
+                        <ActionIcon onClick={handleDelete} variant="subtle" color="red.8" size="lg">
                             <IconTrash className="w-4/5 h-4/5" stroke={1.5} />
                         </ActionIcon>
                     )}

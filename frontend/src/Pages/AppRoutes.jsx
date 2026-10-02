@@ -19,11 +19,40 @@ import PublicRoute from '../Services/PublicRoute';
 import Unauthorized from './UnauthroizedPage';
 import NotFoundPage from './NotFoundPage';
 import { LoadingOverlay } from '@mantine/core';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const pageTitles = [
+  ['/find-jobs', 'Find Jobs'],
+  ['/jobs/', 'Job Details'],
+  ['/apply-job/', 'Apply'],
+  ['/find-talent', 'Find Talent'],
+  ['/talent-profile/', 'Talent Profile'],
+  ['/company/', 'Company'],
+  ['/job-history', 'Job History'],
+  ['/posted-jobs/', 'Posted Jobs'],
+  ['/post-job/', 'Post a Job'],
+  ['/signup', 'Sign Up'],
+  ['/login', 'Login'],
+  ['/profile', 'My Profile'],
+  ['/unauthorized', 'Unauthorized'],
+];
+
+// Sets the browser tab title for the current page
+const PageTitle = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const match = pageTitles.find(([prefix]) => pathname.startsWith(prefix));
+    document.title = match ? `${match[1]} | HireHub` : 'HireHub';
+  }, [pathname]);
+  return null;
+};
 
 const AppRoutes = () => {
   const overlay = useSelector((state) => state.overlay);
   return (
     <BrowserRouter>
+      <PageTitle />
       <div className='relative overflow-hidden'>
         {overlay && <div className='fixed !z-[2000] w-full h-full flex  items-center justify-center'>
           <LoadingOverlay

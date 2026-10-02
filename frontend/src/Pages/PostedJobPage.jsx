@@ -42,16 +42,16 @@ const PostedJobPage = () => {
   }, [id, user.id, navigate, dispatch]);
 
   return (
-    <div className="min-h-[90vh] bg-white-50 font-['poppins'] px-5">
+    <div className="min-h-[90vh] bg-white font-['poppins'] px-5 xs-mx:px-3">
       <Divider />
       {matches && (
-        <Button my="xs" size="sm" autoContrast onClick={open}>
-          All Jobs
+        <Button my="md" size="sm" variant="light" onClick={open}>
+          All Jobs ({jobList.length})
         </Button>
       )}
       <Drawer
         opened={opened}
-        size={230}
+        size={290}
         overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
         onClose={close}
         title="All Jobs"
@@ -119,7 +119,7 @@ export default PostedJobPage;
 //       )}
 //       <Drawer
 //         opened={opened}
-//         size={230}
+//         size={290}
 //         overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
 //         onClose={close}
 //         title="All Jobs"

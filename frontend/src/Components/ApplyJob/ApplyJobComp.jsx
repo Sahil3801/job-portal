@@ -1,3 +1,4 @@
+import { logoFallback } from "../../Services/Utilities";
 import { Divider } from "@mantine/core";
 import { timeAgo } from "../../Services/Utilities";
 import ApplicationForm from "./ApplicationForm";
@@ -10,7 +11,7 @@ const ApplyJobComp = (props) => {
           <div className="p-3 bg-mine-shaft-800 rounded-xl flex shrink-0 ">
             <img
               className="h-14  xs-mx:h-10 xs-mx:w-10"
-              src={`/Icons/${props.company}.png`}
+              src={`/Icons/${props.company}.png`} onError={logoFallback}
               alt=""
             />
           </div>

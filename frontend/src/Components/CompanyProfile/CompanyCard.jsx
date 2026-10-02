@@ -1,3 +1,4 @@
+import { logoFallback } from "../../Services/Utilities";
 import { ActionIcon, Button } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
@@ -7,7 +8,7 @@ const CompanyCard=(props)=>{
         <div className="flex justify-between bg-mine-shaft-900 rounded-lg items-center p-2">
         <div className="flex gap-2 items-center">
             <div className="p-2 bg-mine-shaft-800 rounded-md">
-                <img className="h-7" src={`/Icons/${props.name}.png`} alt="" />
+                <img className="h-7" src={`/Icons/${props.name}.png`} onError={logoFallback} alt="" />
             </div>
             <div className="flex flex-col ">
                 <div className="font-semibold ">{props.name}</div>
