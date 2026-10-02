@@ -28,7 +28,7 @@ const Profile = () => {
     }, [id]);
 
     return (
-        <div data-aos="zoom-out" className="w-2/3 lg-mx:w-full">
+        <div className="w-2/3 lg-mx:w-full">
             <div>
                 <div className="relative">
                     <img

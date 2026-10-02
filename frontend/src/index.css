@@ -29,7 +29,7 @@
 
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #93c5fd;
+    background-color: #d1d5db;
 }
 /* Mantine's default placeholder grey is too faint on white */
 :root {

@@ -3,7 +3,7 @@ import { formatDate } from "../../Services/Utilities";
 
 const CertiCard = (props) => {
     return (
-        <div data-aos="fade-up">
+        <div>
             <div className="flex justify-between sm-mx:flex-wrap gap-2">
                 <div className="flex gap-2 items-center">
                     <div className="p-2 bg-mine-shaft-800 rounded-md shrink-0">

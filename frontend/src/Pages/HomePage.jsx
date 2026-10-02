@@ -1,23 +1,13 @@
-
-import Footer from "../Components/Footer/Footer";
-import Header from "../Components/Header/Header";
-import Companies from "../Components/LandingPage/Companies";
 import DreamJob from "../Components/LandingPage/DreamJob";
-import JobCategory from "../Components/LandingPage/JobCategory";
-import Subscribe from "../Components/LandingPage/Subscribe";
-import Testimonials from "../Components/LandingPage/Testimonials";
 import Working from "../Components/LandingPage/Working";
 
-const HomePage=()=>{
-    return (
-        <div className="min-h-[90vh] bg-white font-['poppins'] pb-16">
-            <DreamJob/>
-            <Companies/>
-            <JobCategory/>
-            <Working/>
-            <Testimonials/>
-            
-        </div>
-    )
-}
+const HomePage = () => {
+  return (
+    <main className="min-h-[70vh] bg-white font-['poppins'] pb-20">
+      <DreamJob />
+      <Working />
+    </main>
+  );
+};
+
 export default HomePage;

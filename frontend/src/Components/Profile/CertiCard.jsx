@@ -22,7 +22,7 @@ const CertiCard = (props) => {
     };
 
     return (
-        <div data-aos="zoom-out">
+        <div>
             <div className="flex justify-between sm-mx:flex-wrap">
                 <div className="flex gap-2 items-center">
                     <div className="p-2 bg-mine-shaft-800 rounded-md shrink-0">

@@ -24,7 +24,6 @@ const Card = (props) => {
 
     return (
         <div
-            data-aos="zoom-out"
             className="p-4 rounded-xl bg-mine-shaft-900 hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400 transition duration-300 ease-in-out w-72 flex flex-col gap-3"
         >
             <div className="flex justify-between">

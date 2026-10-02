@@ -89,7 +89,7 @@ const PostJob = () => {
     };
 
     return (
-        <div data-aos="zoom-out" className="px-16 bs-mx:px-10 md-mx:px-5 py-5 ">
+        <div className="px-16 bs-mx:px-10 md-mx:px-5 py-5 ">
             <h1 className="text-2xl font-semibold mb-5 text-mine-shaft-50">Post a Job</h1>
             <div className="flex flex-col gap-5">
                 <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
@@ -103,7 +103,6 @@ const PostJob = () => {
                 <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
                     <SelectInput form={form} name="location" {...select[4]} />
                     <NumberInput
-                        data-aos="zoom-out"
                         {...form.getInputProps("packageOffered")}
                         withAsterisk
                         label="Salary (LPA)"
@@ -115,7 +114,6 @@ const PostJob = () => {
                     />
                 </div>
                 <TagsInput
-                    data-aos="zoom-out"
                     {...form.getInputProps("skillsRequired")}
                     withAsterisk
                     label="Skills"
@@ -124,7 +122,6 @@ const PostJob = () => {
                     clearable
                 />
                 <Textarea
-                    data-aos="zoom-out"
                     {...form.getInputProps("about")}
                     withAsterisk
                     className="my-3"
@@ -135,7 +132,7 @@ const PostJob = () => {
                 />
                 <div className="[&_button[data-active='true']]:!text-bright-sun-400 [&_button[data-active='true']]:!bg-bright-sun-400/20">
                     <div className="text-sm font-medium ">Job Description<span className="text-red-600 "> *</span></div>
-                    <TextEditor data-aos="zoom-out" form={form} data={editorData} />
+                    <TextEditor form={form} data={editorData} />
                 </div>
                 <div className="flex gap-4">
                     <Button color="brightSun.4" onClick={handlePost} variant="filled">

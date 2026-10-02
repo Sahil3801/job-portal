@@ -89,7 +89,7 @@ export default Profile;
 //     return (
 //         <div className="w-4/5 lg-mx:w-full mx-auto">
 //             <div className="">
-//                 <div data-aos="zoom-out" className="relative px-5">
+//                 <div className="relative px-5">
 //                     <img className="rounded-t-2xl xs-mx:h-32" src="/Profile/banner.jpg" alt="" />
 //                     <div ref={ref} className="absolute cursor-pointer flex items-center justify-center !rounded-full -bottom-1/3 md-mx:-bottom-10 sm-mx:-bottom-16 left-6">
 //                         <Avatar className="!w-48 !h-48 md-mx:!w-40 md-mx:!h-40 border-mine-shaft-950 border-8 rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!h-32 xs-mx:!w-32" src={profile.picture ? `data:image/jpeg;base64,${profile.picture}` : '/avatar.png'} alt="" />

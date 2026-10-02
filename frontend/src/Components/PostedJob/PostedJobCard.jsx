@@ -20,7 +20,6 @@ const PostedJobCard = ({ theme = 'dark', selectedId, ...props }) => {
 
   return (
     <Link
-      data-aos="fade-up"
       to={`/posted-jobs/${props.id}`}
       className={`rounded-xl p-3 w-52 lg-mx:w-48 bs-mx:w-full border-l-4 cursor-pointer transition-colors duration-200 border-l-bright-sun-400 ${cardClasses}`}
     >
@@ -44,7 +43,7 @@ export default PostedJobCard;
     
 //     return (
 //         <Link
-//             data-aos="fade-up"
+//
 //             to={`/posted-jobs/${props.id}`}
 //             className={`rounded-xl p-3 w-52 lg-mx:w-48 bs-mx:w-full border-l-4 hover:bg-opacity-80 cursor-pointer border-l-bright-sun-400 ${props.id === id ? "bg-bright-sun-400 text-black" : "bg-mine-shaft-900 text-mine-shaft-300"}`}
 //         >

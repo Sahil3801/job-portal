@@ -19,7 +19,7 @@ const NavLinks = () => {
             className={`h-full flex items-center border-b-[3px] pt-[3px] transition-colors ${
               active
                 ? "border-bright-sun-400 text-bright-sun-400 font-semibold"
-                : "border-transparent text-mine-shaft-200 hover:text-bright-sun-400"
+                : "border-transparent text-mine-shaft-300 hover:text-mine-shaft-50"
             }`}
           >
             {link.name}

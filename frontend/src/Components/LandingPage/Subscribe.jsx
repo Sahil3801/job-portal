@@ -5,7 +5,7 @@ const Subscribe = () => {
     const matches = useMediaQuery('(max-width: 639px)');
     const matches1 = useMediaQuery('(max-width: 475px)');
     return (
-        <div data-aos="zoom-out" className="mt-20 flex items-center bg-mine-shaft-900 mx-20 sm-mx:mx-5 py-3 rounded-xl justify-around flex-wrap">
+        <div className="mt-20 flex items-center bg-mine-shaft-900 mx-20 sm-mx:mx-5 py-3 rounded-xl justify-around flex-wrap">
             <div className="text-4xl md-mx:text-3xl sm-mx:text-2xl xs-mx:text-xl w-2/5 bs-mx:w-4/5 text-center font-semibold text-mine-shaft-100">
                 Never Wants to Miss Any <span className="text-bright-sun-400">Job News?</span>
             </div>

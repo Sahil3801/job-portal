@@ -46,7 +46,6 @@ const SelectInput = (props) => {
     >
       <Combobox.Target>
         <InputBase
-          data-aos="zoom-out"
           label={props.label}
           withAsterisk
           rightSection={<Combobox.Chevron />}
