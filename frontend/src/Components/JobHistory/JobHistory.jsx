@@ -1,4 +1,5 @@
-import { Divider, Tabs } from "@mantine/core";
+import { Button, Divider, Tabs } from "@mantine/core";
+import { Link } from "react-router-dom";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { getAllJobs } from "../../Services/JobService";
@@ -57,7 +58,11 @@ const JobHistory = () => {
                     <Tabs.Panel value={activeTab} className="[&>div]:w-full">
                         <div className="flex mt-10 flex-wrap gap-5">
                             {
-                                showList.length > 0 ? showList.map((item, index) => <Card key={index} {...item} {...{ [activeTab.toLowerCase()]: true }} />) : <div className="text-lg font-medium">Nothing to show..</div>
+                                showList.length > 0 ? showList.map((item, index) => <Card key={index} {...item} {...{ [activeTab.toLowerCase()]: true }} />) : <div className="w-full text-center py-12 bg-mine-shaft-900 rounded-xl">
+                                    <div className="text-lg font-medium text-mine-shaft-100">Nothing here yet</div>
+                                    <div className="text-mine-shaft-300 mt-1">Jobs you apply to or save will show up here.</div>
+                                    <Button component={Link} to="/find-jobs" mt="md">Find Jobs</Button>
+                                </div>
                             }
                         </div>
                     </Tabs.Panel>

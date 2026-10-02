@@ -14,13 +14,11 @@ import fields from "../../Data/Profile";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { successNotification } from "../../Services/NotificationService";
 import { useForm } from "@mantine/form";
-import { useMediaQuery } from "@mantine/hooks";
 
 const Info = () => {
   const select = fields;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const matches = useMediaQuery("(max-width: 475px)");
   const profile = useSelector((state) => state.profile);
   const [edit, setEdit] = useState(false);
 
@@ -58,7 +56,7 @@ const Info = () => {
 
   return (
     <>
-      <div className="text-3xl xs-mx:text-2xl  font-semibold flex justify-between text-black-950">
+      <div className="text-3xl xs-mx:text-2xl  font-semibold flex justify-between text-mine-shaft-50">
         {user.name}
         <div>
           {edit && (
@@ -66,7 +64,7 @@ const Info = () => {
               onClick={handleSave}
               variant="subtle"
               color="green.8"
-              size={matches ? "md" : "lg"}
+              size="lg"
             >
               <IconCheck className="w-4/5 h-4/5" stroke={1.5} />
             </ActionIcon>
@@ -74,8 +72,8 @@ const Info = () => {
           <ActionIcon
             onClick={handleClick}
             variant="subtle"
-            color={edit ? "red.8" : "white.4"}
-            size={matches ? "md" : "lg"}
+            color={edit ? "red.8" : "gray.7"}
+            size="lg"
           >
             {edit ? (
               <IconX className="w-4/5 h-4/5" stroke={1.5} />
@@ -101,20 +99,20 @@ const Info = () => {
               min={1}
               max={50}
               {...form.getInputProps("totalExp")}
-              className="text-black-950" // Added text color
+
             />
           </div>
         </>
       ) : (
         <>
-          <div className="text-xl xs-mx:text-base flex gap-1 items-center text-black-950">
+          <div className="text-xl xs-mx:text-base flex gap-1 items-center text-mine-shaft-50">
             <IconBriefcase className="h-5 w-5" stroke={1.5} />
             {profile.jobTitle} &bull; {profile.company}
           </div>
-          <div className="text-lg xs-mx:text-base flex gap-1 items-center text-black-950">
+          <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-50">
             <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile.location}
           </div>
-          <div className="text-lg xs-mx:text-base flex gap-1 items-center text-black-950">
+          <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-50">
             <IconBriefcase className="h-5 w-5" stroke={1.5} />
             Experience: {profile.totalExp} Years
           </div>

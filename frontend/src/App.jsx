@@ -24,43 +24,31 @@ function App() {
   }, []);
 
   const theme = createTheme({
-    focusRing: "never",
+    focusRing: "auto",
     fontFamily: "Poppins, sans-serif",
-    primaryColor: "black",
+    headings: { fontFamily: "Poppins, sans-serif" },
+    primaryColor: "brightSun",
     primaryShade: 4,
     colors: {
-      white: [
-        "#ffffff",
-        "#efefef",
-        "#dcdcdc",
-        "#bdbdbd",
-        "#989898",
-        "#7c7c7c",
-        "#656565",
-        "#525252",
-        "#464646",
-        "#3d3d3d",
-        "#292929",
-      ],
-      black: [
-        "#f6f6f6",
-        "#e7e7e7",
-        "#d1d1d1",
-        "#b0b0b0",
-        "#888888",
-        "#6d6d6d",
-        "#5d5d5d",
-        "#4f4f4f",
-        "#454545",
-        "#3d3d3d",
-        "#000000",
+      // Accent colour; shade 4 matches Tailwind's bright-sun-400
+      brightSun: [
+        "#eff6ff",
+        "#dbeafe",
+        "#bfdbfe",
+        "#93c5fd",
+        "#1d4ed8",
+        "#1e40af",
+        "#1e40af",
+        "#1e3a8a",
+        "#172554",
+        "#172554",
       ],
     },
   });
 
   return (
     <Provider store={Store}>
-      <MantineProvider defaultColorScheme="dark" theme={theme}>
+      <MantineProvider defaultColorScheme="light" forceColorScheme="light" theme={theme}>
         <Notifications position="top-center" zIndex={2001} />
         <AppRoutes />
       </MantineProvider>

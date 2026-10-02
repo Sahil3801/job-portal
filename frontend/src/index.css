@@ -29,5 +29,13 @@
 
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #ffbd20 ;
+    background-color: #93c5fd;
+}
+/* Mantine's default placeholder grey is too faint on white */
+:root {
+  --mantine-color-placeholder: #6b7280;
+}
+.mantine-Input-input::placeholder,
+.mantine-InputPlaceholder-placeholder {
+  color: #6b7280 !important;
 }

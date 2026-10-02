@@ -25,20 +25,20 @@ const Profile = () => {
   const profile = useSelector((state) => state.profile);
 
   return (
-    <div className="w-4/5 lg-mx:w-full mx-auto bg-white-100 rounded-lg shadow-md">
+    <div className="w-4/5 lg-mx:w-full mx-auto bg-white border border-mine-shaft-700 rounded-2xl shadow-sm pb-6">
       <div>
-        <div className="relative px-5">
+        <div className="relative">
           {/* Banner Image */}
           <img
-            className="rounded-t-2xl xs-mx:h-32"
+            className="rounded-t-2xl w-full h-48 xs-mx:h-32 object-cover"
             src="/Profile/banner.jpg"
             alt="Profile Banner"
           />
 
           {/* Profile Avatar */}
-          <div className="absolute -bottom-1/4 md-mx:-bottom-8 sm-mx:-bottom-12 left-6">
+          <div className="absolute -bottom-16 xs-mx:-bottom-12 left-6">
             <Avatar
-              className="!w-48 !h-48 md-mx:!w-40 md-mx:!h-40 border-white-10  0 border-8 rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!h-32 xs-mx:!w-32"
+              className="!w-32 !h-32 xs-mx:!w-24 xs-mx:!h-24 border-white border-4 rounded-full shadow-sm"
               src="/avatar.png"
               alt="Profile Picture"
             />
@@ -46,15 +46,15 @@ const Profile = () => {
         </div>
 
         {/* Profile Sections */}
-        <div className="px-3 pt-2 mt-16">
+        <div className="px-6 xs-mx:px-4 pt-2 mt-20 xs-mx:mt-16">
           <Info />
-          <Divider my="xl" className="border-white-200" /> {/* Updated divider color */}
+          <Divider my="xl" />
           <About />
-          <Divider my="xl" className="border-white-200" /> {/* Updated divider color */}
+          <Divider my="xl" />
           <Skills />
-          <Divider my="xl" className="border-white-200" /> {/* Updated divider color */}
+          <Divider my="xl" />
           <Experience />
-          <Divider my="xl" className="border-white-200" /> {/* Updated divider color */}
+          <Divider my="xl" />
           <Certification />
         </div>
         {/* <div className="px-3 pt-2 mt-16">

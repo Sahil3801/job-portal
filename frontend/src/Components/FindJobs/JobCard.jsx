@@ -1,3 +1,4 @@
+import { logoFallback } from "../../Services/Utilities";
 import { Button, Divider, Text } from "@mantine/core";
 import { IconBookmark, IconBookmarkFilled, IconClockHour3 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
@@ -23,7 +24,7 @@ const JobCard = (props) => {
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
-                    <img className="h-7" src={`/Icons/${props.company}.png`} alt="" />
+                    <img className="h-7" src={`/Icons/${props.company}.png`} onError={logoFallback} alt="" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold ">{props.jobTitle}</div>
@@ -42,7 +43,7 @@ const JobCard = (props) => {
             <Text className="!text-xs text-justify !text-mine-shaft-300" lineClamp={3}>{props.about}
             </Text>
         </div>
-        <Divider color="mineShaft.7" size="xs" />
+        <Divider color="gray.3" size="xs" />
         <div className="flex justify-between">
             <div className="font-semibold text-mine-shaft-200">&#8377;{props.packageOffered} LPA</div>
             <div className="text-xs flex gap-1 items-center text-mine-shaft-400">

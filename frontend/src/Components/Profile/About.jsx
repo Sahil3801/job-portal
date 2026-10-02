@@ -9,13 +9,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { successNotification } from "../../Services/NotificationService";
-import { useMediaQuery } from "@mantine/hooks";
 
 const About = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
   const [about, setAbout] = useState("");
-  const matches = useMediaQuery("(max-width: 475px)");
   const [edit, setEdit] = useState(false);
 
   const handleClick = () => {
@@ -34,7 +32,7 @@ const About = () => {
 
   return (
     <div>
-      <div className="text-2xl font-semibold mb-3 flex justify-between text-black-950  ">
+      <div className="text-2xl font-semibold mb-3 flex justify-between text-mine-shaft-50  ">
         About
         <div>
           {edit && (
@@ -50,8 +48,8 @@ const About = () => {
           <ActionIcon
             onClick={handleClick}
             variant="subtle"
-            color={edit ? "red.8" : "white.4"}
-            size={matches ? "md" : "lg"}
+            color={edit ? "red.8" : "gray.7"}
+            size="lg"
           >
             {edit ? (
               <IconX className="w-4/5 h-4/5" stroke={1.5} />
@@ -70,7 +68,7 @@ const About = () => {
           placeholder="Enter about yourself"
         />
       ) : (
-        <div className="text-sm text-white-300 text-justify">
+        <div className="text-sm text-mine-shaft-300 text-justify">
           {profile.about}
         </div>
       )}

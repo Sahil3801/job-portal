@@ -4,14 +4,12 @@ import { changeProfile } from "../../Slices/ProfileSlice";
 import { ActionIcon, TagsInput } from "@mantine/core";
 import { IconCheck, IconDeviceFloppy, IconPencil, IconX } from "@tabler/icons-react";
 import { successNotification } from "../../Services/NotificationService";
-import { useMediaQuery } from "@mantine/hooks";
 
 const Skills = () => {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.profile);
     const [skills, setSkills] = useState([]);
     const [edit, setEdit] = useState(false);
-    const matches = useMediaQuery('(max-width: 475px)');
 
     const handleClick = () => {
         if (!edit) {
@@ -31,7 +29,7 @@ const Skills = () => {
 
     return (
         <div>
-            <div className="text-2xl font-semibold mb-3 flex justify-between text-black-950">
+            <div className="text-2xl font-semibold mb-3 flex justify-between text-mine-shaft-50">
                 Skills
                 <div>
                     {edit && (
@@ -39,7 +37,7 @@ const Skills = () => {
                             onClick={handleSave}
                             variant="subtle"
                             color="green.8"
-                            size={matches ? "md" : "lg"}
+                            size="lg"
                         >
                             <IconCheck className="w-4/5 h-4/5" stroke={1.5} />
                         </ActionIcon>
@@ -47,8 +45,8 @@ const Skills = () => {
                     <ActionIcon
                         onClick={handleClick}
                         variant="subtle"
-                        color={edit ? "red.8" : "white.4"}
-                        size={matches ? "md" : "lg"}
+                        color={edit ? "red.8" : "gray.7"}
+                        size="lg"
                     >
                         {edit ? (
                             <IconX className="w-4/5 h-4/5" stroke={1.5} />
@@ -70,7 +68,7 @@ const Skills = () => {
                     {profile?.skills?.map((skill, index) => (
                         <div
                             key={index}
-                            className="bg-white-300 rounded-3xl px-3 py-1 text-sm font-medium bg-opacity-15 text-white-400"
+                            className="bg-bright-sun-50 rounded-3xl px-3 py-1 text-sm font-medium text-bright-sun-400"
                         >
                             {skill}
                         </div>

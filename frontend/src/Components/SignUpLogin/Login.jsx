@@ -51,20 +51,19 @@ const Login = () => {
       setLoading(true);
       loginUser(data)
         .then((res) => {
-          successNotification(
-            "Login Successful",
-            "Redirecting to home page..."
-          );
-          dispatch(setJwt(res.jwt));
+          successNotification("Login Successful", "Welcome back!");
           const decoded = jwtDecode(res.jwt);
           dispatch(setUser({ ...decoded, email: decoded.sub }));
-          setTimeout(() => {
-            navigate("/");
-          }, 4000);
+          // Setting the token makes PublicRoute redirect to the user's start page
+          dispatch(setJwt(res.jwt));
         })
         .catch((err) => {
           console.log(err);
-          errorNotification("Login Failed", err.response.data.errorMessage);
+          errorNotification(
+            "Login Failed",
+            err.response?.data?.errorMessage ||
+              "Could not reach the server. Please try again in a minute."
+          );
           setLoading(false);
         });
     }
@@ -76,11 +75,17 @@ const Login = () => {
         visible={loading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
-        loaderProps={{ color: "blue", type: "bars" }}
+        loaderProps={{ type: "bars" }}
       />
       {/* <div  className="w-1/2 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center"> */}
-      <div className="w-1/2 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center bg-white p-8 rounded-lg">
-        <div className="text-2xl font-semibold text-black-950">Login</div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+        className="w-1/2 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col gap-3 justify-center"
+      >
+        <h1 className="text-2xl font-semibold text-mine-shaft-50">Login</h1>
         <TextInput
           value={data.email}
           error={formError.email}
@@ -90,7 +95,7 @@ const Login = () => {
           label="Email"
           withAsterisk
           placeholder="Your email"
-          className="text-black-950" // Added black text color
+          autoComplete="email"
         />
         <PasswordInput
           value={data.password}
@@ -101,33 +106,31 @@ const Login = () => {
           label="Password"
           withAsterisk
           placeholder="Password"
-          className="text-black-950" // Added black text color
+          autoComplete="current-password"
         />
         <Button
+          type="submit"
           loading={loading}
-          onClick={handleSubmit}
-          autoContrast
           variant="filled"
-          color="blue" // Changed button color to blue
           fullWidth
         >
           Login
         </Button>
-        <div className="text-center sm-mx:text-sm xs-mx:text-xs text-black-800">
-          {" "}
-          Don't have an account?
-          <span
-            className="text-blue-600 hover:underline cursor-pointer"
+        <div className="text-center sm-mx:text-sm xs-mx:text-xs text-mine-shaft-300">
+          Don't have an account?{" "}
+          <button
+            type="button"
+            className="text-bright-sun-400 font-medium hover:underline"
             onClick={() => {
               navigate("/signup");
               setFormError(form);
               setData(form);
             }}
           >
-            SignUp
-          </span>
+            Sign up
+          </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };

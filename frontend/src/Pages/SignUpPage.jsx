@@ -9,13 +9,12 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[100vh] w-[100vw] overflow-hidden sm-mx:overflow-y-auto relative bg-white-100">
+    <div className="h-[100vh] w-[100vw] overflow-hidden sm-mx:overflow-y-auto relative bg-mine-shaft-900">
       <Button
         size="sm"
         className="!absolute left-5 z-10"
         onClick={() => navigate("/")}
         my="lg"
-        color="black"
         leftSection={<IconArrowLeft size={20} />}
         variant="light"
       >
@@ -50,6 +49,7 @@ const SignUpPage = () => {
                     gap-5 
                     justify-center 
                     flex-col 
+                    bg-bright-sun-50 
                     ${
                       location.pathname === "/signup"
                         ? "rounded-r-[200px]"
@@ -58,13 +58,13 @@ const SignUpPage = () => {
                     // bg-white-100
                 `}
         >
-          <div className="flex gap-1 items-center text-black-950">
-            <IconBriefcaseFilled className="h-16 w-16" stroke={2.5} />
+          <div className="flex gap-1 items-center text-mine-shaft-50">
+            <IconBriefcaseFilled className="h-16 w-16 text-bright-sun-400" stroke={2.5} />
             <div className="text-6xl bs-mx:text-5xl md-mx:text-4xl sm-mx:text-3xl font-semibold">
               HireHub
             </div>
           </div>
-          <div className="text-2xl bs-mx:text-xl md-mx:text-lg text-black-800 font-semibold">
+          <div className="text-2xl bs-mx:text-xl md-mx:text-lg text-mine-shaft-300 font-semibold">
             Discover the perfect job for you
           </div>
         </div>

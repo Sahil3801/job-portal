@@ -4,8 +4,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Consider renaming these to be more semantic or adjusting the scale
+        // Light theme. Components were first built for a dark theme with these
+        // two scales, so "mine-shaft" runs light (950 = page background) to
+        // dark (50 = strongest text), and "bright-sun" is the accent colour.
+        "mine-shaft": {
+          50: "#111827",
+          100: "#1f2937",
+          200: "#374151",
+          300: "#4b5563",
+          400: "#565e6b",
+          500: "#6b7280",
+          600: "#5f6672",
+          700: "#e5e7eb",
+          800: "#eef0f3",
+          900: "#f7f8fa",
+          950: "#ffffff",
+        },
+        "bright-sun": {
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#1d4ed8",
+          500: "#1e40af",
+          600: "#1e40af",
+          700: "#1e3a8a",
+          800: "#172554",
+          900: "#172554",
+          950: "#0f172a",
+        },
         white: {
+          DEFAULT: "#ffffff",
           50: "#ffffff",
           100: "#efefef",
           200: "#dcdcdc",
@@ -19,6 +48,7 @@ module.exports = {
           950: "#292929",
         },
         black: {
+          DEFAULT: "#000000",
           50: "#f6f6f6",
           100: "#e7e7e7",
           200: "#d1d1d1",

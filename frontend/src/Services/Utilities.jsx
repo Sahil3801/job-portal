@@ -76,4 +76,10 @@ const formatInterviewTime = (dateString) => {
   return date.toLocaleString("en-US", options);
 };
 
-export { formatDate, timeAgo, getBase64, openPDF, formatInterviewTime };
+// Shows a generic icon when a company has no logo in /public/Icons
+const logoFallback = (event) => {
+  event.currentTarget.onerror = null;
+  event.currentTarget.src = "/Icons/default.svg";
+};
+
+export { formatDate, timeAgo, getBase64, openPDF, formatInterviewTime, logoFallback };

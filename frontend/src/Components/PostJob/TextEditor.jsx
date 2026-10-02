@@ -31,7 +31,7 @@ const TextEditor = (props) => {
 
   return (
     <RichTextEditor editor={editor}>
-      <RichTextEditor.Toolbar bg="mineShaft.10" sticky stickyOffset={60}>
+      <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
@@ -76,7 +76,7 @@ const TextEditor = (props) => {
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 
-      <RichTextEditor.Content bg="mineShaft.10" />
+      <RichTextEditor.Content />
     </RichTextEditor>
   );
 };
