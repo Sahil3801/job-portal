@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtHelper {
-	private String secret = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
+	// Base64-encoded signing key, supplied via the JWT_SECRET environment variable
+	@Value("${jwt.secret}")
+	private String secret;
 
 	// Token expiration time in milliseconds (e.g., 1 hour = 3600000 ms)
 	private static final long JWT_TOKEN_VALIDITY = 36000000;

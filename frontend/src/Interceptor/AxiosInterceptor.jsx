@@ -41,8 +41,10 @@ import axios from "axios";
 import { removeUser } from "../Slices/UserSlice";
 import { removeJwt } from "../Slices/JwtSlice";
 
+export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: API_URL,
 });
 
 axiosInstance.interceptors.request.use(
