@@ -20,7 +20,7 @@ const Certification = () => {
   };
 
   return (
-    <div data-aos="fade-up">
+    <div>
       <div className="text-2xl font-semibold mb-4 flex justify-between text-mine-shaft-50">
         Certifications
         <div className="flex gap-2">

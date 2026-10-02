@@ -3,7 +3,7 @@ import { formatDate } from "../../Services/Utilities";
 
 const ExpCard = (props) => {
     return (
-        <div data-aos="fade-up" className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
             <div className="flex justify-between gap-2 flex-wrap">
                 <div className="flex gap-2 items-center">
                     <div className="p-2 bg-mine-shaft-800 rounded-md">

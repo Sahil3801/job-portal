@@ -48,7 +48,7 @@ const Job = (props) => {
     };
 
     return (
-        <div data-aos="zoom-out" className="w-2/3 bs-mx:w-full">
+        <div className="w-2/3 bs-mx:w-full">
             <div className="flex justify-between items-center flex-wrap">
                 <div className="flex items-center gap-2">
                     <div className="p-3 bg-mine-shaft-800 rounded-xl shrink-0 flex ">

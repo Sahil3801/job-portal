@@ -34,7 +34,7 @@ const PostedJobDesc = (props) => {
   // We can pass `setTab` directly to the Tabs component's onChange.
 
   return (
-    <div data-aos="zoom-out" className="w-3/4 md-mx:w-full px-5 md-mx:p-0">
+    <div className="w-3/4 md-mx:w-full px-5 md-mx:p-0">
       {props.jobTitle ? (
         <>
           <div className="text-2xl xs-mx:text-xl font-semibold flex items-center ">
@@ -167,7 +167,7 @@ export default PostedJobDesc;
 //   }, [props]);
 
 //   return (
-//     <div data-aos="zoom-out" className="w-3/4 md-mx:w-full px-5 md-mx:p-0">
+//     <div className="w-3/4 md-mx:w-full px-5 md-mx:p-0">
 //       {props.jobTitle ? (
 //         <>
 //           <div className="text-2xl xs-mx:text-xl font-semibold flex items-center ">

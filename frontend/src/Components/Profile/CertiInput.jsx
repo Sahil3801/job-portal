@@ -51,7 +51,7 @@ const CertiInput = (props) => {
     };
 
     return (
-        <div data-aos="zoom-out">
+        <div>
             <div className="text-lg font-semibold">Add Certificate</div>
             <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:flex-wrap my-3">
                 <TextInput withAsterisk {...form.getInputProps('name')} label="Title" placeholder="Enter title" />
