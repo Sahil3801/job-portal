@@ -1,73 +1,68 @@
-import { Indicator, Menu, Notification, rem } from "@mantine/core";
-import { IconBell, IconCheck } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { ActionIcon, Indicator, Menu } from "@mantine/core";
+import { IconBell, IconX } from "@tabler/icons-react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getNotifications, readNotification } from "../../Services/NotiService";
+import { timeAgo } from "../../Services/Utilities";
 
 const NotiMenu = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    getNotifications(user.id)
-      .then((res) => {
-        setNotifications(res);
-      })
-      .catch((err) => console.log(err));
-  }, [user]);
-
-  const unread = (index) => {
-    let notis = [...notifications];
-    notis = notis.filter((noti, i) => i !== index);
-    setNotifications(notis);
-    readNotification(notifications[index].id)
-      .then((_res) => {})
-      .catch((err) => console.log(err));
-  };
-
   const [opened, setOpened] = useState(false);
 
-  return (
-    <Menu shadow="md" width={400} opened={opened} onChange={setOpened}>
-      <Menu.Target>
-        <div className="bg-black-900 p-1.5 rounded-full">
-          <Indicator
-            disabled={notifications.length <= 0}
-            color="white.4"
-            offset={6}
-            size={8}
-            processing
-          >
-            <IconBell stroke={1.5} />
-          </Indicator>
-        </div>
-      </Menu.Target>
+  const load = useCallback(() => {
+    getNotifications(user.id)
+      .then((res) => setNotifications(res))
+      .catch((err) => console.log(err));
+  }, [user.id]);
 
+  // Load on login and refresh every minute
+  useEffect(() => {
+    load();
+    const timer = setInterval(load, 60000);
+    return () => clearInterval(timer);
+  }, [load]);
+
+  const markRead = (noti) => {
+    setNotifications((list) => list.filter((n) => n.id !== noti.id));
+    readNotification(noti.id).catch((err) => console.log(err));
+  };
+
+  const openNotification = (noti) => {
+    markRead(noti);
+    setOpened(false);
+    if (noti.route) navigate(noti.route);
+  };
+
+  return (
+    <Menu shadow="md" width={340} opened={opened} onChange={(o) => { setOpened(o); if (o) load(); }} position="bottom-end">
+      <Menu.Target>
+        <Indicator disabled={notifications.length === 0} color="red" offset={6} size={8}>
+          <ActionIcon variant="subtle" color="dark" size="lg" aria-label="Notifications">
+            <IconBell stroke={1.5} />
+          </ActionIcon>
+        </Indicator>
+      </Menu.Target>
       <Menu.Dropdown>
-        <div className="flex flex-col gap-1">
-          {notifications.map((noti, index) => (
-            <Notification
-              onClick={() => {
-                navigate(noti.route);
-                setOpened(false);
-                unread(index);
-              }}
-              key={index}
-              className="hover:bg-black-900 cursor-pointer"
-              onClose={() => unread(index)}
-              icon={<IconCheck style={{ width: rem(20), height: rem(20) }} />}
-              color="teal"
-              title={noti.action}
-              mt="md"
-            >
-              {noti.message}
-            </Notification>
+        <Menu.Label>Notifications</Menu.Label>
+        {notifications.length === 0 && (
+          <div className="px-3 py-4 text-sm text-mine-shaft-300">You're all caught up.</div>
+        )}
+        <div className="max-h-96 overflow-y-auto">
+          {notifications.map((noti) => (
+            <div key={noti.id} className="flex gap-2 items-start px-3 py-2 rounded-md hover:bg-mine-shaft-900">
+              <button className="flex-1 text-left" onClick={() => openNotification(noti)}>
+                <div className="text-sm font-semibold text-mine-shaft-50">{noti.action}</div>
+                <div className="text-sm text-mine-shaft-300">{noti.message}</div>
+                <div className="text-xs text-mine-shaft-400 mt-1">{timeAgo(noti.timestamp)}</div>
+              </button>
+              <ActionIcon variant="subtle" color="gray" size="sm" aria-label="Dismiss" onClick={() => markRead(noti)}>
+                <IconX size={14} />
+              </ActionIcon>
+            </div>
           ))}
-          {notifications.length === 0 && (
-            <div className="text-center text-white-300">No Notifications</div>
-          )}
         </div>
       </Menu.Dropdown>
     </Menu>

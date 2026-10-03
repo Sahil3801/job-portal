@@ -5,7 +5,8 @@ const profileSlice = createSlice({
     initialState:  {},
     reducers: {
         changeProfile: (state, action) => {
-            state = updateProfile(action.payload);
+            // Save in the background; the UI updates right away
+            updateProfile(action.payload).catch((err) => console.log(err));
             return action.payload;
         },
         setProfile: (state, action) => {

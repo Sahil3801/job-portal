@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApplicantDTO {
 	private Long applicantId;
+	private Long profileId;
 	private String name;
 	private String email;
 	private Long phone;
@@ -23,7 +24,7 @@ public class ApplicantDTO {
 	private LocalDateTime interviewTime;
 
 	public Applicant toEntity() {
-		return new Applicant(this.getApplicantId(), this.getName(), this.getEmail(), this.getPhone(), this.getWebsite(),
+		return new Applicant(this.getApplicantId(), this.getProfileId(), this.getName(), this.getEmail(), this.getPhone(), this.getWebsite(),
 				this.getResume() != null ? Base64.getDecoder().decode(this.getResume()) : null, this.getCoverLetter(),
 				this.getTimestamp(), this.getApplicationStatus(), this.interviewTime);
 	}

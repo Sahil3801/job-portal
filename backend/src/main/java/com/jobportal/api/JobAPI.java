@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jobportal.dto.AccountType;
 import com.jobportal.dto.ApplicantDTO;
 import com.jobportal.dto.Application;
 import com.jobportal.dto.ApplicationStatus;
@@ -21,6 +23,7 @@ import com.jobportal.dto.JobDTO;
 import com.jobportal.dto.ResponseDTO;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.service.JobService;
+import com.jobportal.utility.CurrentUser;
 
 import jakarta.validation.Valid;
 
@@ -40,6 +43,9 @@ public class JobAPI {
 
 	@PostMapping("/postAll")
 	public ResponseEntity<List<JobDTO>> postAllJob(@RequestBody @Valid List<JobDTO> jobDTOs) throws JobPortalException {
+		// Bulk seeding is for admins only
+		if (CurrentUser.get().getAccountType() != AccountType.ADMIN)
+			throw new JobPortalException("ACCESS_DENIED");
 
 		return new ResponseEntity<>(jobDTOs.stream().map((x) -> {
 			try {
@@ -80,10 +86,17 @@ public class JobAPI {
 		return new ResponseEntity<>(jobService.getHistory(id, applicationStatus), HttpStatus.OK);
 	}
 
+	@PostMapping("/respondOffer/{id}")
+	public ResponseEntity<ResponseDTO> respondToOffer(@PathVariable Long id, @RequestParam boolean accept)
+			throws JobPortalException {
+		jobService.respondToOffer(id, accept);
+		return new ResponseEntity<>(new ResponseDTO(accept ? "Offer accepted" : "Offer declined"), HttpStatus.OK);
+	}
+
 	@PostMapping("/changeAppStatus")
 	public ResponseEntity<ResponseDTO> changeAppStatus(@RequestBody Application application) throws JobPortalException {
 		jobService.changeAppStatus(application);
-		return new ResponseEntity<>(new ResponseDTO("Status Chhanged Successfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new ResponseDTO("Status changed successfully"), HttpStatus.OK);
 	}
 
 }

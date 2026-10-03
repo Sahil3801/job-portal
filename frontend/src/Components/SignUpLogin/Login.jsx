@@ -108,6 +108,13 @@ const Login = () => {
           placeholder="Password"
           autoComplete="current-password"
         />
+        <button
+          type="button"
+          onClick={open}
+          className="self-end text-sm text-mine-shaft-300 hover:text-mine-shaft-50 hover:underline"
+        >
+          Forgot password?
+        </button>
         <Button
           type="submit"
           loading={loading}
@@ -131,6 +138,7 @@ const Login = () => {
           </button>
         </div>
       </form>
+      <ResetPassword opened={opened} close={close} />
     </>
   );
 };

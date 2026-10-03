@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { talents } from "../../Data/TalentData";
 import Sort from "../FindJobs/Sort";
 import TalentCard from "./TalentCard";
 import { getAllProfiles } from "../../Services/ProfileService";
@@ -27,9 +26,9 @@ const Talents = () => {
 
     useEffect(() => {
         if (sort === "Experience: Low to High") {
-            setTalents([...talents].sort((a, b) => a.totalExp - b.totalExp));
+            setTalents([...talents].sort((a, b) => (a.totalExp ?? 0) - (b.totalExp ?? 0)));
         } else if (sort === "Experience: High to Low") {
-            setTalents([...talents].sort((a, b) => b.totalExp - a.totalExp));
+            setTalents([...talents].sort((a, b) => (b.totalExp ?? 0) - (a.totalExp ?? 0)));
         }
     }, [sort]);
 
@@ -40,7 +39,7 @@ const Talents = () => {
         if (filter["Job Title"] && filter["Job Title"].length > 0) filtered = filtered.filter((talent) => filter["Job Title"]?.some((x) => talent.jobTitle?.toLowerCase().includes(x.toLowerCase())));
         if (filter.Location && filter.Location.length > 0) filtered = filtered.filter((talent) => filter.Location?.some((x) => talent.location?.toLowerCase().includes(x.toLowerCase())));
         if (filter.Skills && filter.Skills.length > 0) filtered = filtered.filter((talent) => filter.Skills?.some((x) => talent.skills?.some((y) => y.toLowerCase().includes(x.toLowerCase()))));
-        if (filter.exp && filter.exp.length > 0) filtered = filtered.filter((talent) => filter.exp[0] <= talent.totalExp && talent.totalExp <= filter.exp[1]);
+        if (filter.exp && filter.exp.length > 0) filtered = filtered.filter((talent) => filter.exp[0] <= (talent.totalExp ?? 0) && (talent.totalExp ?? 0) <= filter.exp[1]);
 
         setFilteredTalents(filtered);
     }, [filter, talents]);

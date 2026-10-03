@@ -25,15 +25,18 @@ public class ExceptionControllerAdvice {
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorInfo>generalExceptionHandler(Exception exception){
-		ErrorInfo error=new ErrorInfo(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
+		exception.printStackTrace();
+		ErrorInfo error=new ErrorInfo("Something went wrong. Please try again.", HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(JobPortalException.class)
 	public ResponseEntity<ErrorInfo>jobPortalExceptionHandler(JobPortalException exception){
-		String msg=environment.getProperty(exception.getMessage());
-		ErrorInfo error=new ErrorInfo(msg, HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
-		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		// Messages are keys into application.properties; fall back to the raw text
+		String msg=environment.getProperty(exception.getMessage(), exception.getMessage());
+		HttpStatus status="ACCESS_DENIED".equals(exception.getMessage()) ? HttpStatus.FORBIDDEN : HttpStatus.BAD_REQUEST;
+		ErrorInfo error=new ErrorInfo(msg, status.value(), LocalDateTime.now());
+		return new ResponseEntity<>(error, status);
 	}
 	@ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
     public ResponseEntity<ErrorInfo> validatorExceptionHandler(Exception exception) {

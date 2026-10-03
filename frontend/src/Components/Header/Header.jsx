@@ -3,6 +3,7 @@ import { Burger, Button, Divider, Drawer } from "@mantine/core";
 import { IconBriefcaseFilled, IconLogout2, IconUserCircle } from "@tabler/icons-react";
 import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
+import NotiMenu from "./NotiMenu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
@@ -79,7 +80,10 @@ const Header = () => {
       {/* Profile & Burger Menu */}
       <div className="flex gap-3 items-center">
         {user ? (
-          <ProfileMenu />
+          <>
+            <NotiMenu />
+            <ProfileMenu />
+          </>
         ) : (
           <Button component={Link} to="/login" variant="filled">
             Login

@@ -1,7 +1,7 @@
 import { Button, Divider, Drawer } from "@mantine/core";
 import PostedJob from "../Components/PostedJob/PostedJob";
 import PostedJobDesc from "../Components/PostedJob/PostedJobDesc";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getJobsPostedBy } from "../Services/JobService";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,28 +18,28 @@ const PostedJobPage = () => {
   const [job, setJob] = useState(null);
   const matches = useMediaQuery("(max-width: 767px)");
 
+  const loadJobs = useCallback(
+    (showLoader = true) => {
+      if (showLoader) dispatch(showOverlay());
+      return getJobsPostedBy(user.id)
+        .then((res) => {
+          setJobList(res);
+          if (res && res.length > 0 && Number(id) === 0) {
+            const firstActive = res.find((x) => x.jobStatus === "ACTIVE") || res[0];
+            navigate(`/posted-jobs/${firstActive.id}`, { replace: true });
+          }
+          setJob(res.find((item) => String(item.id) === String(id)) || null);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => showLoader && dispatch(hideOverlay()));
+    },
+    [id, user.id, navigate, dispatch]
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(showOverlay());
-
-    getJobsPostedBy(user.id)
-      .then((res) => {
-        setJobList(res);
-        if (res && res.length > 0 && Number(id) === 0) {
-          res.forEach((x) => {
-            if (x.jobStatus === "ACTIVE") {
-              navigate(`/posted-jobs/${x.id}`);
-            }
-          });
-        }
-        res.forEach((item) => {
-          if (id == item.id) setJob(item);
-        });
-        window.scrollTo(0, 0);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => dispatch(hideOverlay()));
-  }, [id, user.id, navigate, dispatch]);
+    loadJobs();
+  }, [loadJobs]);
 
   return (
     <div className="min-h-[90vh] bg-white font-['poppins'] px-5 xs-mx:px-3">
@@ -60,7 +60,7 @@ const PostedJobPage = () => {
       </Drawer>
       <div className="flex gap-5 justify-around py-5">
         {!matches && <PostedJob job={job} jobList={jobList} />}
-        <PostedJobDesc {...job} />
+        <PostedJobDesc {...job} onUpdate={() => loadJobs(false)} />
       </div>
     </div>
   );

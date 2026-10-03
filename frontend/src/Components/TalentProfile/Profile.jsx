@@ -1,3 +1,4 @@
+import { formatExperience } from "../../Services/Utilities";
 import { Avatar, Button, Divider, Pill } from "@mantine/core";
 import { IconBriefcase, IconMapPin } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
@@ -51,7 +52,7 @@ const Profile = () => {
                 <div className="px-3 mt-20 xs-mx:mt-16">
                     <div className="text-3xl xs-mx:text-2xl font-semibold flex justify-between items-center gap-3 text-mine-shaft-50">
                         {profile?.name}{' '}
-                        <Button size={matches ? 'sm' : 'md'} color="brightSun.4" variant="light">
+                        <Button component="a" href={`mailto:${profile?.email}`} size={matches ? 'sm' : 'md'} color="brightSun.4" variant="light">
                             Message
                         </Button>
                     </div>
@@ -63,7 +64,7 @@ const Profile = () => {
                         <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile?.location}
                     </div>
                     <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-300">
-                        <IconBriefcase className="h-5 w-5" stroke={1.5} /> Experience: {profile?.totalExp} Years
+                        <IconBriefcase className="h-5 w-5" stroke={1.5} /> Experience: {formatExperience(profile?.totalExp)}
                     </div>
                     <Divider my="xl" />
                     <div>

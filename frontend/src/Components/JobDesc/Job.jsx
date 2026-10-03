@@ -1,4 +1,5 @@
 import { logoFallback } from "../../Services/Utilities";
+import { companyDetails } from "../../Data/Company";
 import { ActionIcon, Button, Divider } from "@mantine/core";
 import { card } from "../../Data/JobDescData";
 import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
@@ -10,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { postJob } from "../../Services/JobService";
-import { successNotification } from "../../Services/NotificationService";
+import { errorNotification, successNotification } from "../../Services/NotificationService";
 import { hideOverlay, showOverlay } from "../../Slices/OverlaySlice";
 
 const Job = (props) => {
@@ -37,13 +38,15 @@ const Job = (props) => {
     }, [props]);
 
     const cleanHTML = DOMPurify.sanitize(props.description);
+    const companyInfo = companyDetails[props.company];
 
     const handleClose = () => {
         if (props.closed) return;
         dispatch(showOverlay());
         postJob({ ...props, jobStatus: "CLOSED" }).then(() => {
             successNotification('Job Closed', 'Job has been closed successfully');
-        }).catch((err) => console.log(err))
+            props.onUpdate?.();
+        }).catch((err) => errorNotification('Error', err.response?.data?.errorMessage || 'Could not close the job.'))
         .finally(() => dispatch(hideOverlay()));
     };
 
@@ -108,16 +111,16 @@ const Job = (props) => {
                         </div>
                         <div>
                             <div className="text-lg font-medium">{props.company}</div>
-                            <div className="text-mine-shaft-300">10k+ Employees</div>
+                            {companyInfo?.Size && <div className="text-mine-shaft-300">{companyInfo.Size}</div>}
                         </div>
                     </div>
                     <Link to={`/company/${props.company}`}>
                         <Button color="brightSun.4" variant="light">Company Page</Button>
                     </Link>
                 </div>
-                <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo fuga recusandae perferendis, excepturi nostrum debitis. Accusantium dolorum corrupti et mollitia unde? Possimus vero nemo maxime vitae impedit? Nisi, quos in. Facilis maiores in nostrum qui animi delectus architecto iste quidem soluta. Illo aspernatur saepe dolores minus soluta? Molestias, delectus eveniet.
-                </div>
+                {companyInfo?.Overview && (
+                    <div className="text-mine-shaft-300 xs-mx:text-sm">{companyInfo.Overview}</div>
+                )}
             </div>
         </div>
     );

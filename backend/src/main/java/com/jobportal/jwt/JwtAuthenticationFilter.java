@@ -63,8 +63,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            Boolean validateToken = this.jwtHelper.validateToken(token, userDetails.getUsername());
+            UserDetails userDetails = null;
+            try {
+                userDetails = this.userDetailsService.loadUserByUsername(username);
+            } catch (Exception e) {
+                logger.info("Token user no longer exists !!");
+            }
+            Boolean validateToken = userDetails != null && this.jwtHelper.validateToken(token, userDetails.getUsername());
             if (validateToken) {
 
                 // set the authentication

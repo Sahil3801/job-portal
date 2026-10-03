@@ -20,11 +20,12 @@ public interface JobService {
 
 	public void applyJob(Long id, ApplicantDTO applicantDTO) throws JobPortalException;
 
-	public List<JobDTO> getHistory(Long id, ApplicationStatus applicationStatus);
+	public List<JobDTO> getHistory(Long id, ApplicationStatus applicationStatus) throws JobPortalException;
 
 	public List<JobDTO> getJobsPostedBy(Long id) throws JobPortalException;
 
 	public void changeAppStatus(Application application) throws JobPortalException;
+	public void respondToOffer(Long jobId, boolean accept) throws JobPortalException;
 	
 	
 

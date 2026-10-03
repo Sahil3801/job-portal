@@ -1,11 +1,14 @@
-import { jobList } from "../../Data/JobsData";
 import JobCard from "../FindJobs/JobCard";
 
-const CompanyJobs=()=>{
-    return <div className="flex mt-10 flex-wrap gap-5">
-    {
-        jobList.map((job, index) => <JobCard key={index} {...job} />)
-    }
-</div>
-}
+const CompanyJobs = ({ jobs, name }) => {
+    if (jobs.length === 0)
+        return <div className="text-mine-shaft-300">{name} has no open jobs right now.</div>;
+
+    return (
+        <div className="flex flex-wrap gap-5">
+            {jobs.map((job) => <JobCard key={job.id} {...job} />)}
+        </div>
+    );
+};
+
 export default CompanyJobs;

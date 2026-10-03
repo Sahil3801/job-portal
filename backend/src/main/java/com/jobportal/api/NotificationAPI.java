@@ -17,6 +17,7 @@ import com.jobportal.dto.ResponseDTO;
 import com.jobportal.entity.Notification;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.service.NotificationService;
+import com.jobportal.utility.CurrentUser;
 
 @RestController
 @CrossOrigin
@@ -27,8 +28,9 @@ public class NotificationAPI {
 	private NotificationService notificationService;
 
 	@GetMapping("/get/{userId}")
-	public ResponseEntity<List<Notification>> getNotifications(@PathVariable Long userId) {
-		return new ResponseEntity<>(notificationService.getUnreadNotifications(userId), HttpStatus.OK);
+	public ResponseEntity<List<Notification>> getNotifications(@PathVariable Long userId) throws JobPortalException {
+		// Always the logged-in user's own notifications
+		return new ResponseEntity<>(notificationService.getUnreadNotifications(CurrentUser.get().getId()), HttpStatus.OK);
 	}
 
 	@PutMapping("/read/{id}")

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Applicant {
 	private Long applicantId;
+	private Long profileId;
 	private String name;
 	private String email;
 	private Long phone;
@@ -26,7 +27,7 @@ public class Applicant {
 	private LocalDateTime interviewTime;
 
 	public ApplicantDTO toDTO() {
-		return new ApplicantDTO(this.getApplicantId(), this.getName(), this.getEmail(), this.getPhone(),
+		return new ApplicantDTO(this.getApplicantId(), this.getProfileId(), this.getName(), this.getEmail(), this.getPhone(),
 				this.getWebsite(),
 				this.getResume() != null ? Base64.getEncoder().encodeToString(this.getResume()) : null,
 				this.getCoverLetter(), this.getTimestamp(), this.getApplicationStatus(), this.interviewTime);
