@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { getHomeRoute } from "../Components/Header/navConfig";
 
 const PublicRoute = ({ children }) => {
     const token = useSelector((state) => state.jwt);
-    const user = useSelector((state) => state.user);
+    // Logged-in users land on the home page
     if (token) {
-        return <Navigate to={getHomeRoute(user?.accountType)} replace />;
+        return <Navigate to="/" replace />;
     }
     return children;
 }

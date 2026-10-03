@@ -1,11 +1,11 @@
 import { Anchor, Avatar, Button, Divider, Modal, Text } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCalendarMonth, IconMapPin } from "@tabler/icons-react";
+import { IconCalendarMonth, IconDownload, IconEye, IconFileTypePdf, IconMapPin } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProfile } from "../../Services/ProfileService";
-import { formatInterviewTime, openPDF, formatExperience } from "../../Services/Utilities";
+import { formatInterviewTime, openPDF, downloadPDF, formatExperience } from "../../Services/Utilities";
 import { changeAppStatus } from "../../Services/JobService";
 import { errorNotification, successNotification } from "../../Services/NotificationService";
 
@@ -122,7 +122,7 @@ const TalentCard = (props) => {
             </div>
             {props.applicationStatus === "ACCEPTED" && <div className="text-sm font-medium text-green-700">Offer accepted by the applicant</div>}
             {props.applicationStatus === "DECLINED" && <div className="text-sm font-medium text-red-700">Offer declined by the applicant</div>}
-            {(props.invited || props.posted) && <Button color="brightSun.4" variant="filled" onClick={openApp} autoContrast fullWidth>View Application</Button>}
+            {props.applicantId && <Button color="brightSun.4" variant="filled" onClick={openApp} leftSection={<IconFileTypePdf size={18} />} fullWidth>View Application &amp; Resume</Button>}
             <Modal opened={opened} onClose={close} radius="lg" title="Schedule Interview" centered>
                 <div className="flex flex-col gap-4">
                     <DateInput value={date} onChange={setDate} minDate={new Date()} label="Date" placeholder="Enter Date" />
@@ -130,12 +130,41 @@ const TalentCard = (props) => {
                     <Button loading={saving} onClick={() => handleOffer("INTERVIEWING")} color="brightSun.4" variant="filled" fullWidth>Schedule</Button>
                 </div>
             </Modal>
-            <Modal opened={app} onClose={closeApp} radius="lg" title="Application" centered>
-                <div className="flex flex-col gap-4">
-                    <div>Email: &emsp;<a className="text-bright-sun-400 hover:underline cursor-pointer" href={`mailto:${props?.email}`}>{props?.email}</a></div>
-                    <div>Website: &emsp;<a className="text-bright-sun-400 hover:underline cursor-pointer" target="_blank" rel="noreferrer" href={props.website}>{props.website}</a></div>
-                    <div>Resume: &emsp;<span className="text-bright-sun-400 hover:underline cursor-pointer" onClick={() => openPDF(props.resume)}>{props.name}</span></div>
-                    <div>Cover Letter: &emsp;<div className="text-wrap">{props.coverLetter}</div></div>
+            <Modal opened={app} onClose={closeApp} radius="lg" title={`Application from ${props.name}`} centered size="lg">
+                <div className="flex flex-col gap-5">
+                    <div className="grid grid-cols-[120px_1fr] xs-mx:grid-cols-1 gap-x-4 gap-y-3 text-sm">
+                        <div className="text-mine-shaft-300">Email</div>
+                        <a className="underline break-all" href={`mailto:${props.email}`}>{props.email}</a>
+                        <div className="text-mine-shaft-300">Phone</div>
+                        <div>{props.phone || "Not provided"}</div>
+                        <div className="text-mine-shaft-300">Website</div>
+                        {props.website
+                            ? <a className="underline break-all" target="_blank" rel="noreferrer" href={props.website}>{props.website}</a>
+                            : <div>Not provided</div>}
+                        <div className="text-mine-shaft-300">Applied</div>
+                        <div>{props.timestamp ? formatInterviewTime(props.timestamp + "Z") : "-"}</div>
+                    </div>
+                    <div className="border border-mine-shaft-700 rounded-lg p-4 flex items-center justify-between gap-3 flex-wrap">
+                        <div className="flex items-center gap-3">
+                            <IconFileTypePdf size={32} stroke={1.5} />
+                            <div>
+                                <div className="font-semibold">Resume</div>
+                                <div className="text-xs text-mine-shaft-300">PDF</div>
+                            </div>
+                        </div>
+                        {props.resume ? (
+                            <div className="flex gap-2">
+                                <Button leftSection={<IconEye size={16} />} onClick={() => openPDF(props.resume)}>View Resume</Button>
+                                <Button variant="outline" leftSection={<IconDownload size={16} />} onClick={() => downloadPDF(props.resume, `${props.name} - Resume.pdf`)}>Download</Button>
+                            </div>
+                        ) : (
+                            <div className="text-sm text-mine-shaft-300">No resume attached</div>
+                        )}
+                    </div>
+                    <div>
+                        <div className="text-sm text-mine-shaft-300 mb-1">Cover letter</div>
+                        <div className="text-sm whitespace-pre-wrap bg-mine-shaft-900 rounded-lg p-3">{props.coverLetter || "No cover letter."}</div>
+                    </div>
                 </div>
             </Modal>
         </div>

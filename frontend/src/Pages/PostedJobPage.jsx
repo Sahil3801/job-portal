@@ -4,7 +4,7 @@ import PostedJobDesc from "../Components/PostedJob/PostedJobDesc";
 import { useCallback, useEffect, useState } from "react";
 import { getJobsPostedBy } from "../Services/JobService";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { hideOverlay, showOverlay } from "../Slices/OverlaySlice";
 
@@ -18,12 +18,14 @@ const PostedJobPage = () => {
   const [job, setJob] = useState(null);
   const matches = useMediaQuery("(max-width: 767px)");
 
+  const [loaded, setLoaded] = useState(false);
   const loadJobs = useCallback(
     (showLoader = true) => {
       if (showLoader) dispatch(showOverlay());
       return getJobsPostedBy(user.id)
         .then((res) => {
           setJobList(res);
+          setLoaded(true);
           if (res && res.length > 0 && Number(id) === 0) {
             const firstActive = res.find((x) => x.jobStatus === "ACTIVE") || res[0];
             navigate(`/posted-jobs/${firstActive.id}`, { replace: true });
@@ -41,6 +43,20 @@ const PostedJobPage = () => {
     loadJobs();
   }, [loadJobs]);
 
+  // Tab with no jobs to show on the right (e.g. "CLOSED"), or null
+  const [emptyTab, setEmptyTab] = useState(null);
+  useEffect(() => {
+    setEmptyTab(null);
+    close();
+  }, [id, close]);
+
+  const handleTabChange = (tab, firstJob) => {
+    setEmptyTab(firstJob ? null : tab);
+    if (firstJob) navigate(`/posted-jobs/${firstJob.id}`);
+  };
+
+  const tabNames = { ACTIVE: "active", DRAFT: "draft", CLOSED: "closed" };
+
   return (
     <div className="min-h-[90vh] bg-white font-['poppins'] px-5 xs-mx:px-3">
       <Divider />
@@ -56,11 +72,20 @@ const PostedJobPage = () => {
         onClose={close}
         title="All Jobs"
       >
-        <PostedJob job={job} jobList={jobList} />
+        <PostedJob job={job} jobList={jobList} onTabChange={handleTabChange} />
       </Drawer>
       <div className="flex gap-5 justify-around py-5">
-        {!matches && <PostedJob job={job} jobList={jobList} />}
-        <PostedJobDesc {...job} onUpdate={() => loadJobs(false)} />
+        {!matches && <PostedJob job={job} jobList={jobList} onTabChange={handleTabChange} />}
+        {emptyTab || (loaded && jobList.length === 0) ? (
+          <div className="w-3/4 md-mx:w-full flex flex-col items-center justify-center gap-4 min-h-[50vh] bg-mine-shaft-900 rounded-xl text-center px-4">
+            <div className="text-xl font-semibold">
+              {jobList.length === 0 ? "You haven't posted any jobs yet" : `No ${tabNames[emptyTab]} jobs yet`}
+            </div>
+            <Button component={Link} to="/post-job/0">Post a Job</Button>
+          </div>
+        ) : (
+          <PostedJobDesc {...job} onUpdate={() => loadJobs(false)} />
+        )}
       </div>
     </div>
   );
