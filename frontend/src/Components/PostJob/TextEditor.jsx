@@ -1,3 +1,4 @@
+import "@mantine/tiptap/styles.css";
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';

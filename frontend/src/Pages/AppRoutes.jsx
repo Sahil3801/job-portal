@@ -1,26 +1,33 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import FindJobsPage from './FindJobsPage';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Header from '../Components/Header/Header';
-import JobPage from './JobPage';
-import ApplyJobPage from './ApplyJobPage';
-import FindTalentPage from './FindTalentPage';
-import TalentProfilePage from './TalentProfilePage';
-import CompanyPage from './CompanyPage';
-import JobHistoryPage from './JobHistoryPage';
-import PostedJobPage from './PostedJobPage';
-import PostJobPage from './PostJobPage';
-import SignUpPage from './SignUpPage';
 import HomePage from './HomePage';
 import { useSelector } from 'react-redux';
 import Footer from '../Components/Footer/Footer';
-import ProfilePage from './ProfilePage';
 import ProtectedRoute from '../Services/ProtectedRoute';
 import PublicRoute from '../Services/PublicRoute';
-import Unauthorized from './UnauthroizedPage';
-import NotFoundPage from './NotFoundPage';
-import { LoadingOverlay } from '@mantine/core';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Loader, LoadingOverlay } from '@mantine/core';
+import { Suspense, lazy, useEffect } from 'react';
+
+// Each page is downloaded only when it is opened, so the first load stays small
+const FindJobsPage = lazy(() => import('./FindJobsPage'));
+const JobPage = lazy(() => import('./JobPage'));
+const ApplyJobPage = lazy(() => import('./ApplyJobPage'));
+const FindTalentPage = lazy(() => import('./FindTalentPage'));
+const TalentProfilePage = lazy(() => import('./TalentProfilePage'));
+const CompanyPage = lazy(() => import('./CompanyPage'));
+const JobHistoryPage = lazy(() => import('./JobHistoryPage'));
+const PostedJobPage = lazy(() => import('./PostedJobPage'));
+const PostJobPage = lazy(() => import('./PostJobPage'));
+const SignUpPage = lazy(() => import('./SignUpPage'));
+const ProfilePage = lazy(() => import('./ProfilePage'));
+const Unauthorized = lazy(() => import('./UnauthroizedPage'));
+const NotFoundPage = lazy(() => import('./NotFoundPage'));
+
+const PageLoader = () => (
+  <div className='min-h-[60vh] flex items-center justify-center'>
+    <Loader color='dark' type='bars' />
+  </div>
+);
 
 const pageTitles = [
   ['/find-jobs', 'Find Jobs'],
@@ -63,6 +70,7 @@ const AppRoutes = () => {
           />
         </div>}
         <Header />
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/unauthorized' element={<Unauthorized />} />
@@ -80,6 +88,7 @@ const AppRoutes = () => {
           <Route path='/profile' element={<ProtectedRoute allowedRoles={['APPLICANT', 'ADMIN', 'EMPLOYER']}><ProfilePage /></ProtectedRoute>} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
         <Footer />
       </div>
     </BrowserRouter>
