@@ -13,19 +13,19 @@ const loginUser = async (login) => {
 }
 
 const sendOtp = async (email) => {
-    return axiosInstance.post(`/users/sendOtp/${email}`)
+    return axiosInstance.post(`/users/sendOtp/${encodeURIComponent(email)}`)
         .then((result) => result.data)
         .catch((error) => { throw error; });
 }
 
 const verifyOtp = async (email, otp) => {
-    return axiosInstance.get(`/users/verifyOtp/${email}/${otp}`)
+    return axiosInstance.get(`/users/verifyOtp/${encodeURIComponent(email)}/${otp}`)
         .then((result) => result.data)
         .catch((error) => { throw error; });
 }
 
-const resetPassword = async (email, password) => {
-    return axiosInstance.post(`/users/changePass`, { email, password })
+const resetPassword = async (email, otp, password) => {
+    return axiosInstance.post(`/users/changePass`, { email, otp, password })
         .then((result) => result.data)
         .catch((error) => { throw error; });
 }

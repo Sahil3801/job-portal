@@ -11,11 +11,9 @@ const signupValidation = (name, value) => {
     case "password":
       if (value.length === 0) return "Password is required.";
       if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/.test(
-          value
-        )
+        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*+=]).{8,15}$/.test(value)
       )
-        return "Password must be 8-15 characters with an uppercase, a lowercase, a number and a special character.";
+        return "Password must be 8-15 characters with an uppercase letter, a lowercase letter, a number and a special character (!@#$%^&*+=).";
 
       return "";
     default:

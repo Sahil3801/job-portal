@@ -36,7 +36,7 @@ public class AuthAPI {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 		} catch (AuthenticationException e) {
-			throw new JobPortalException("Incorrect username or password");
+			throw new JobPortalException("INVALID_CREDENTIALS");
 		}
 
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());

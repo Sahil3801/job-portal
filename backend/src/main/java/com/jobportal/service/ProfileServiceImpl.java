@@ -12,6 +12,10 @@ import com.jobportal.entity.Profile;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.repository.ProfileRepository;
 import com.jobportal.utility.Utilities;
+import com.jobportal.utility.CurrentUser;
+import com.jobportal.jwt.CustomUserDetails;
+import com.jobportal.dto.AccountType;
+import java.util.Objects;
 
 @Service("profileService")
 public class ProfileServiceImpl implements ProfileService {
@@ -28,6 +32,8 @@ public class ProfileServiceImpl implements ProfileService {
 		profile.setSkills(new ArrayList<>());
 		profile.setExperiences(new ArrayList<>());
 		profile.setCertifications(new ArrayList<>());
+		profile.setSavedJobs(new ArrayList<>());
+		profile.setTotalExp(0L);
 		profileRepository.save(profile);
 		return profile.getId();
 	}
@@ -39,7 +45,11 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Override
 	public ProfileDTO updateProfile(ProfileDTO profileDTO) throws JobPortalException {
-		profileRepository.findById(profileDTO.getId()).orElseThrow(()->new JobPortalException("PROFILE_NOT_FOUND"));
+		CustomUserDetails user = CurrentUser.get();
+		if (user.getAccountType() != AccountType.ADMIN && !Objects.equals(user.getProfileId(), profileDTO.getId()))
+			throw new JobPortalException("ACCESS_DENIED");
+		Profile existing = profileRepository.findById(profileDTO.getId()).orElseThrow(()->new JobPortalException("PROFILE_NOT_FOUND"));
+		profileDTO.setEmail(existing.getEmail()); // email is tied to the login account
 		profileRepository.save(profileDTO.toEntity());
 		return profileDTO;
 	}

@@ -65,6 +65,15 @@ const changeAppStatus = async (interview) => {
     });
 };
 
+const respondToOffer = async (id, accept) => {
+  return axiosInstance
+    .post(`/jobs/respondOffer/${id}`, null, { params: { accept } })
+    .then((result) => result.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export {
   postJob,
   getAllJobs,
@@ -73,4 +82,5 @@ export {
   getHistory,
   getJobsPostedBy,
   changeAppStatus,
+  respondToOffer,
 };

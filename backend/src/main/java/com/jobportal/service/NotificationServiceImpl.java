@@ -12,6 +12,8 @@ import com.jobportal.entity.Notification;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.repository.NotificationRepository;
 import com.jobportal.utility.Utilities;
+import com.jobportal.utility.CurrentUser;
+import java.util.Objects;
 
 @Service("notificationService")
 public class NotificationServiceImpl implements NotificationService{
@@ -33,7 +35,9 @@ public class NotificationServiceImpl implements NotificationService{
 
 	@Override
 	public void readNotification(Long id) throws JobPortalException {
-		Notification noti=notificationRepository.findById(id).orElseThrow(()->new JobPortalException("No Notitication found"));
+		Notification noti=notificationRepository.findById(id).orElseThrow(()->new JobPortalException("No notification found"));
+		if (!Objects.equals(noti.getUserId(), CurrentUser.get().getId()))
+			throw new JobPortalException("ACCESS_DENIED");
 		noti.setStatus(NotificationStatus.READ);
 		notificationRepository.save(noti);
 		

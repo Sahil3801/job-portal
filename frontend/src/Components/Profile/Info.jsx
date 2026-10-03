@@ -1,3 +1,4 @@
+import { formatExperience } from "../../Services/Utilities";
 import {
   IconBriefcase,
   IconCheck,
@@ -114,7 +115,7 @@ const Info = () => {
           </div>
           <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-50">
             <IconBriefcase className="h-5 w-5" stroke={1.5} />
-            Experience: {profile.totalExp} Years
+            Experience: {formatExperience(profile.totalExp)}
           </div>
         </>
       )}

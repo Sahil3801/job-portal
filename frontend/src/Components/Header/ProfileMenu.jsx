@@ -22,7 +22,7 @@ const ProfileMenu = () => {
         <button className="flex items-center gap-2 cursor-pointer" aria-label="Account menu">
           <div className="xs-mx:hidden text-mine-shaft-100 font-medium">{user.name}</div>
           <Avatar
-            src="/avatar.png" // Always use the default image
+            src={profile?.picture ? `data:image/jpeg;base64,${profile.picture}` : "/avatar.png"}
             alt="User Avatar"
           />
         </button>

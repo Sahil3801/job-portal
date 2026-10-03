@@ -19,8 +19,9 @@ const PostedJobDesc = (props) => {
     return {
       APPLIED: applicants.filter((x) => x.applicationStatus === "APPLIED"),
       INTERVIEWING: applicants.filter((x) => x.applicationStatus === "INTERVIEWING"),
-      OFFERED: applicants.filter((x) => x.applicationStatus === "OFFERED"),
-      REJECTED: applicants.filter((x) => x.applicationStatus === "REJECTED"),
+      // Offers the applicant answered stay in the same tabs, marked on the card
+      OFFERED: applicants.filter((x) => ["OFFERED", "ACCEPTED"].includes(x.applicationStatus)),
+      REJECTED: applicants.filter((x) => ["REJECTED", "DECLINED"].includes(x.applicationStatus)),
     };
   }, [props.applicants]);
 
@@ -82,7 +83,7 @@ const PostedJobDesc = (props) => {
                 <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.APPLIED.length > 0
                     ? applicantLists.APPLIED.map((talent) => (
-                        <TalentCard key={talent.applicantId} {...talent} posted={true} />
+                        <TalentCard key={talent.applicantId} {...talent} posted={true} onUpdate={props.onUpdate} />
                       ))
                     : <EmptyState text="No Applicants Yet" />}
                 </div>
@@ -92,7 +93,7 @@ const PostedJobDesc = (props) => {
                  <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.INTERVIEWING.length > 0
                     ? applicantLists.INTERVIEWING.map((talent) => (
-                        <TalentCard key={talent.applicantId} {...talent} invited />
+                        <TalentCard key={talent.applicantId} {...talent} invited onUpdate={props.onUpdate} />
                       ))
                     : <EmptyState text="No Applicants Invited Yet" />}
                 </div>
@@ -102,7 +103,7 @@ const PostedJobDesc = (props) => {
                 <div className="flex mt-10 flex-wrap gap-5 justify-around">
                   {applicantLists.OFFERED.length > 0
                     ? applicantLists.OFFERED.map((talent) => (
-                        <TalentCard key={talent.applicantId} {...talent} offered />
+                        <TalentCard key={talent.applicantId} {...talent} offered onUpdate={props.onUpdate} />
                       ))
                     : <EmptyState text="No Applicants Offered Yet" />}
                 </div>
@@ -113,7 +114,7 @@ const PostedJobDesc = (props) => {
                   {applicantLists.REJECTED.length > 0
                     ? applicantLists.REJECTED.map((talent) => (
                         // --- FIX 3: Bug Fix ---
-                        <TalentCard key={talent.applicantId} {...talent} rejected />
+                        <TalentCard key={talent.applicantId} {...talent} rejected onUpdate={props.onUpdate} />
                       ))
                     : <EmptyState text="No Applicants Rejected Yet" />}
                 </div>

@@ -13,8 +13,12 @@
 // import { IconEdit } from "@tabler/icons-react";
 // import { getBase64 } from "../../Services/Utilities";
 
-import { Avatar, Divider } from "@mantine/core";
-import { useSelector } from "react-redux";
+import { Avatar, Divider, FileButton } from "@mantine/core";
+import { IconCamera } from "@tabler/icons-react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
+import { getBase64 } from "../../Services/Utilities";
+import { errorNotification, successNotification } from "../../Services/NotificationService";
 import Info from "./Info";
 import About from "./About";
 import Skills from "./Skills";
@@ -23,6 +27,18 @@ import Certification from "./Certifications";
 
 const Profile = () => {
   const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
+  const handlePhoto = async (file) => {
+    if (!file) return;
+    if (file.size > 1024 * 1024) {
+      errorNotification("Photo too large", "Please choose an image under 1 MB.");
+      return;
+    }
+    const picture = (await getBase64(file)).split(",")[1];
+    dispatch(changeProfile({ ...profile, picture }));
+    successNotification("Photo updated", "Your profile photo has been changed.");
+  };
 
   return (
     <div className="w-4/5 lg-mx:w-full mx-auto bg-white border border-mine-shaft-700 rounded-2xl shadow-sm pb-6">
@@ -37,11 +53,20 @@ const Profile = () => {
 
           {/* Profile Avatar */}
           <div className="absolute -bottom-16 xs-mx:-bottom-12 left-6">
-            <Avatar
-              className="!w-32 !h-32 xs-mx:!w-24 xs-mx:!h-24 border-white border-4 rounded-full shadow-sm"
-              src="/avatar.png"
-              alt="Profile Picture"
-            />
+            <FileButton onChange={handlePhoto} accept="image/png,image/jpeg">
+              {(props) => (
+                <button {...props} className="relative group rounded-full" aria-label="Change profile photo">
+                  <Avatar
+                    className="!w-32 !h-32 xs-mx:!w-24 xs-mx:!h-24 border-white border-4 rounded-full shadow-sm"
+                    src={profile?.picture ? `data:image/jpeg;base64,${profile.picture}` : "/avatar.png"}
+                    alt="Profile Picture"
+                  />
+                  <span className="absolute bottom-1 right-1 bg-white border border-mine-shaft-700 rounded-full p-1.5 shadow-sm">
+                    <IconCamera size={16} />
+                  </span>
+                </button>
+              )}
+            </FileButton>
           </div>
         </div>
 
