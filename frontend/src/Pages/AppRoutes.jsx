@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Header from '../Components/Header/Header';
+import ServerStatus from '../Components/ServerStatus';
 import HomePage from './HomePage';
 import { useSelector } from 'react-redux';
 import Footer from '../Components/Footer/Footer';
@@ -69,6 +70,7 @@ const AppRoutes = () => {
             loaderProps={{ color: 'brightSun.4', type: 'bars' }}
           />
         </div>}
+        <ServerStatus />
         <Header />
         <Suspense fallback={<PageLoader />}>
         <Routes>

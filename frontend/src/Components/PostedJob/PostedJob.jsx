@@ -3,73 +3,54 @@ import { useEffect, useMemo, useState } from "react";
 import PostedJobCard from "./PostedJobCard";
 import { useParams } from "react-router-dom";
 
+const newestFirst = (a, b) => new Date(b.postTime).getTime() - new Date(a.postTime).getTime();
+
 const PostedJob = (props) => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState(props.job?.jobStatus || "ACTIVE");
 
   useEffect(() => {
-    setActiveTab(props.job?.jobStatus || "ACTIVE");
+    if (props.job?.jobStatus) setActiveTab(props.job.jobStatus);
   }, [props.job]);
 
-  const { activeJobs, draftJobs, closedJobs } = useMemo(() => {
-    const activeJobs = [];
-    const draftJobs = [];
-    const closedJobs = [];
-
-    for (const job of props.jobList) {
-      if (job?.jobStatus === "ACTIVE") activeJobs.push(job);
-      else if (job?.jobStatus === "DRAFT") draftJobs.push(job);
-      else if (job?.jobStatus === "CLOSED") closedJobs.push(job);
-    }
-
-    return { activeJobs, draftJobs, closedJobs };
+  const jobsByStatus = useMemo(() => {
+    const groups = { ACTIVE: [], DRAFT: [], CLOSED: [] };
+    for (const job of props.jobList) groups[job?.jobStatus]?.push(job);
+    Object.values(groups).forEach((list) => list.sort(newestFirst));
+    return groups;
   }, [props.jobList]);
 
-  // --- FIX #2: Added the missing definition for jobsToRender ---
-  const jobsToRender =
-    {
-      ACTIVE: activeJobs,
-      DRAFT: draftJobs,
-      CLOSED: closedJobs,
-    }[activeTab] || [];
+  // Switching tabs opens the newest job in that tab, or an empty state
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    props.onTabChange?.(tab, jobsByStatus[tab][0]);
+  };
+
+  const jobsToRender = jobsByStatus[activeTab] || [];
 
   return (
     <div className="w-1/5 lg-mx:w-full">
       <div className="text-2xl font-semibold mb-5">Jobs</div>
-      <div>
-        <Tabs
-          variant="pills"
-          autoContrast
-          value={activeTab}
-          onChange={setActiveTab}
-        >
-          <Tabs.List className="font-medium">
-            <Tabs.Tab value="ACTIVE">Active [{activeJobs.length}]</Tabs.Tab>
-            <Tabs.Tab value="DRAFT">Drafts [{draftJobs.length}]</Tabs.Tab>
-            <Tabs.Tab value="CLOSED">Closed [{closedJobs.length}]</Tabs.Tab>
-          </Tabs.List>
-        </Tabs>
-      </div>
+      <Tabs variant="pills" value={activeTab} onChange={handleTabChange}>
+        <Tabs.List className="font-medium">
+          <Tabs.Tab value="ACTIVE">Active [{jobsByStatus.ACTIVE.length}]</Tabs.Tab>
+          <Tabs.Tab value="DRAFT">Drafts [{jobsByStatus.DRAFT.length}]</Tabs.Tab>
+          <Tabs.Tab value="CLOSED">Closed [{jobsByStatus.CLOSED.length}]</Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
       <div className="flex flex-col flex-wrap mt-5 gap-5">
-        {jobsToRender
-          .sort(
-            (a, b) =>
-              new Date(b.postTime).getTime() - new Date(a.postTime).getTime()
-          )
-          .map((item) => (
-            <PostedJobCard
-              key={item.id}
-              {...item}
-              selectedId={id}
-              theme="dark" // Change this to "light" if the page has a white background
-            />
-          ))}
+        {jobsToRender.length > 0 ? (
+          jobsToRender.map((item) => (
+            <PostedJobCard key={item.id} {...item} selectedId={id} theme="dark" />
+          ))
+        ) : (
+          <div className="text-sm text-mine-shaft-300">No jobs here.</div>
+        )}
       </div>
     </div>
   );
 };
 
-// --- FIX #1: Added the missing default export ---
 export default PostedJob;
 
 // import { Tabs } from "@mantine/core";

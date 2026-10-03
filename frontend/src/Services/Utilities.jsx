@@ -55,25 +55,22 @@ const getBase64 = (file) => {
   });
 };
 
+const pdfBlobUrl = (base64) => {
+  const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  return URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+};
+
+// Opens a base64 PDF in a new tab
 const openPDF = (base64) => {
-  const byteCharacters = atob(base64);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
+  const newWindow = window.open(pdfBlobUrl(base64), "_blank");
+  if (!newWindow) alert("Your browser blocked the new tab. Please allow pop-ups for this site, or use Download.");
+};
 
-  const blob = new Blob([byteArray], { type: "application/pdf" });
-  const blobUrl = URL.createObjectURL(blob);
-
-  const newWindow = window.open(blobUrl);
-  if (
-    !newWindow ||
-    newWindow.closed ||
-    typeof newWindow.closed === "undefined"
-  ) {
-    alert("Popup was blocked. Please allow popups for this website.");
-  }
+const downloadPDF = (base64, fileName) => {
+  const link = document.createElement("a");
+  link.href = pdfBlobUrl(base64);
+  link.download = fileName;
+  link.click();
 };
 
 const formatInterviewTime = (dateString) => {
@@ -102,4 +99,4 @@ const formatExperience = (years) => {
   return n === 0 ? "Fresher" : `${n} year${n === 1 ? "" : "s"}`;
 };
 
-export { formatDate, timeAgo, getBase64, openPDF, formatInterviewTime, logoFallback, toLocalDateTime, formatExperience };
+export { formatDate, timeAgo, getBase64, openPDF, downloadPDF, formatInterviewTime, logoFallback, toLocalDateTime, formatExperience };
